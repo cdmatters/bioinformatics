@@ -13,10 +13,11 @@ class ModelRandomForest:
     def predict(self, X):
         return self.clf.predict(X)
 
-    def test_accuracy(self, test):
-        X,Y = aux.tuples_to_matrices(test)
-        return self.clf.score(X, Y)
+    def accuracy(self, train, test):
+        train_X, train_Y = aux.tuples_to_matrices(train)
+        test_X, test_Y = aux.tuples_to_matrices(test)
+        return self.clf.score(train_X, train_Y), self.clf.score(test_X, test_Y)
 
     def run(self, train, validate):
         self.train(train)
-        return self.test_accuracy(validate)
+        return self.accuracy(train, validate)

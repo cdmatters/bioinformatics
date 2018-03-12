@@ -1,4 +1,4 @@
-from aux import load_files, tuples_to_matrices, matrices_to_tuples
+from aux import load_files, tuples_to_matrices, matrices_to_tuples, dict_to_vec
 
 from Bio import SeqIO
 from Bio.SeqIO.FastaIO import SimpleFastaParser, FastaIterator
@@ -20,7 +20,7 @@ def letter_fractions(seq):
 
 def prot_param_features(seq):
     features = {}
-    # print(str(seq.seq))
+
     pa = ProteinAnalysis(str(seq.seq).replace('X','').replace('B',''))
 
     # 1. Amino Acid Percent
@@ -36,6 +36,11 @@ def prot_param_features(seq):
 
     # 4. Molecular Weight
     features["molecular_weight"] = pa.molecular_weight()
+
+    # 5. Secondary Structure Fraction
+    struc = ["struc_helix", "struc_turn", "struc_sheet"]
+    ss = pa.secondary_structure_fraction()
+    features.update(dict(zip(struc, ss)))
 
     return features
 
@@ -54,19 +59,12 @@ def map_sequences_to_features(data_tuples):
     '''Transfrom list of [(Seq, Label), ...] -> [(Feature, Label)...] '''
     X, Y = tuples_to_matrices(data_tuples)
     X_features = list(map(sequence_to_features, X))
-    X_feature_vec = dict_to_vec(X_features)
-    
-    return matrices_to_tuples(X_feature_vec, Y)
-    
-### AUX
-
-def dict_to_vec(sequences):
-    banned_keys = ["letter_B"]
-    keys = sorted(list(set(sequences[0].keys()) - set(banned_keys)))
-
-    to_vec = lambda x: [x[k] for k in keys]
+    X_feature_vec, keys = dict_to_vec(X_features, filter_out=None)
     print(keys)
-    return list(map(to_vec, sequences))
+    return matrices_to_tuples(X_feature_vec, Y)
+
+
+
 
 if __name__=="__main__":
 

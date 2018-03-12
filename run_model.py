@@ -18,8 +18,8 @@ def main():
     model = ModelRandomForest()
     print(model.run(train, validate))
 
-    print(nfolds_cross_validate(5, feature_data, model.run))
-
+    train_acc, valid_acc = nfolds_cross_validate(5, feature_data, model.run)
+    print(valid_acc)
     
 
 if __name__=="__main__":
