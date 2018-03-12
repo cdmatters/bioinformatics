@@ -34,6 +34,9 @@ def nfolds_cross_validate(n_folds, data, run_model, *args, **kwargs):
         train = data[ :i*split_size] +  data[(i+1)*split_size:]
         r = run_model(train, valid, *args, **kwargs)
         results.append(r)
+
+        if kwargs.get("verbose", None):
+            print(r)
     return np.mean(np.array(results), axis=0)
 
 def tuples_to_matrices(tuples):
