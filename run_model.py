@@ -1,5 +1,4 @@
 from features import map_sequences_to_features
-from model import ModelRandomForest 
 from aux import load_files, train_validate_split, nfolds_cross_validate, tuples_to_matrices
 
 from sklearn.model_selection import GridSearchCV

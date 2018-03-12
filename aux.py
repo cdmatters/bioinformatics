@@ -46,10 +46,13 @@ def tuples_to_matrices(tuples):
 def matrices_to_tuples(X, Y):
    return list(zip(X,Y))
 
-def dict_to_vec(sequences_dict, filter_out=None):
-    banned_keys = filter_out if filter_out is not None else []
-    keys = sorted(list(set(sequences_dict[0].keys()) - set(banned_keys)))
+def dict_to_vec(sequences_list, filter_out=None):
+    all_keys = set()
+    [all_keys.update(s.keys()) for s in sequences_list]
 
-    to_vec = lambda x: [x[k] for k in keys]
-    return list(map(to_vec, sequences_dict)), keys
+    banned_keys = filter_out if filter_out is not None else []
+    keys = sorted(list(all_keys - set(banned_keys)))
+
+    to_vec = lambda x: [x.get(k, 0) for k in keys]
+    return list(map(to_vec, sequences_list)), keys
     
