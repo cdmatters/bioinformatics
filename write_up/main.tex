@@ -1,42 +1,116 @@
 \documentclass{bioinfo}
 \copyrightyear{2015} \pubyear{2015}
 
-\access{Advance Access Publication Date: Day Month Year}
+\access{ }
 \appnotes{Manuscript Category}
 
 \begin{document}
 \firstpage{1}
 
-\subtitle{Subject Section}
+\subtitle{Protein Classification}
 
-\title[short Title]{This is a title}
-\author[Sample \textit{et~al}.]{Corresponding Author\,$^{\text{\sfb 1,}*}$, Co-Author\,$^{\text{\sfb 2}}$ and Co-Author\,$^{\text{\sfb 2,}*}$}
-\address{$^{\text{\sf 1}}$Department, Institution, City, Post Code, Country and \\
-$^{\text{\sf 2}}$Department, Institution, City, Post Code,
-Country.}
+\title[short Title]{Predicting Protein Origin from Sequence Data}
+\author[Sample \textit{et~al}.]{Eric Hambro\,$^{\text{\sfb 1,}*}$}
+\address{$^{\text{\sf 1}}$Department, Institution, City, Post Code, Country}
 
 \corresp{$^\ast$To whom correspondence should be addressed.}
 
-\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+\history{ }
 
-\editor{Associate Editor: XXXXXXX}
+\editor{ }
 
-\abstract{\textbf{Motivation:} Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text Text Text Text Text
-Text Text Text Text Text.\\
+\abstract{\textbf{Motivation:}  
+Deriving protein function from sequence level data can provide.  Using features derived from the sequence and a random forests model was trained to classify protein sequences according to their location of use. Using a validation set of blah, an accuracy prediction accuracy of blah was reported, along with an F1 score of blah.\\
 \textbf{Results:} Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text\\
 \textbf{Availability:} Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text\\
-\textbf{Contact:} \href{name@bio.com}{name@bio.com}\\
-\textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics}
-online.}
+\textbf{Contact:} \href{eric.hambro.17@ucl.ac.uk}{eric.hambro.17@ucl.ac.uk}
+}
 
 \maketitle
 
 \section{Introduction}
+
+Although there has been a proliferation of sequence data, protein function lags behind. The function is often key to the biological medical elements.  In cases where there is no homology exists for protein guessing the function is difficult. As such a being able to predict subcellular location is a good proxy, shining light on ehwt the function of the protein maybe. A coarser grained analysis.
+
+In this analsysi we are presented with predicting 4 classes of locations: w, x, y, z. These are mutually exclusive categories, and our aim was to train a classifier to predict our things. 
+
+Section 2 of this report contains a description of the method, where section 3 presents the results. Section 4 presents a discussion of the results, breaking down the reasons for choosing the method, and providing analyses of the features, results and a comparison to another model. Finally, I present a comparison with existing work in the field and further work that could be done. 
+
+ is Often pro 
+Why is protein function hard to predict? What is protein location hard to predict? Why is it important?
+
+\section{Method}
+
+Data was obtained from four files containing protein sequences in Fasta format, each file corresponding to the subcellular locations of the proteins: cytosolic, secreted, nuclear and mitochondrial.
+The files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
+
+
+All sequences were translated into feature vectors by extracting features based on a variety of characteristics, such as sequence length, amino acid composition, and amino acid traits. These are catalogued and explored in greated depth in section 4. 
+
+
+The training set of features was then 
+\newpage
+
+Obtained data from X files, and mixed, shuffle and split into a train and validation split. Since the proteins are all non homolgoues, no need to arrange by family and could split anyway. 
+
+Then took these files and processed them into feature vectors, using the bipython module. These extracted, x features from the sequence. 
+
+Then trained a random forest classifier with X trees, and also tested a XGBboost classifier.
+
+Cross validated grid search done to find best parameters for trees
+Ablation study used to investigate salient features.
+
+Trained a random forest with X trees. 
+
+What did you do?
+    - extract features
+    - train -test split - homologies
+    - cross validate
+    - compared with a model (gradient boosting?)
+    - ablation study
+
+\section{Results}
+    - Results of accuracy
+    - Confusion matrix
+    - ablation study
+    - results compared to xgboost
+\section{Discussion}
+   - Examine the features
+   - Examine the ablation study
+   - Examine comparison to XGBoost
+   - Compare with existing literature and approaches
+
+
+
+\section{Further Work}
+    - suggestions: more data? better features/
+
+\section{Conclusion}
+
+\section{Theoretical Background}
+
+What about ???
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+end of paper
+\newpage
 
 Text Text Text Text Text Text  Text Text Text Text Text Text Text
 Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01}
