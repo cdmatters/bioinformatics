@@ -32,25 +32,111 @@ Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text\\
 
 \section{Introduction}
 
-Although there has been a proliferation of sequence data, protein function lags behind. The function is often key to the biological medical elements.  In cases where there is no homology exists for protein guessing the function is difficult. As such a being able to predict subcellular location is a good proxy, shining light on ehwt the function of the protein maybe. A coarser grained analysis.
 
-In this analsysi we are presented with predicting 4 classes of locations: w, x, y, z. These are mutually exclusive categories, and our aim was to train a classifier to predict our things. 
 
-Section 2 of this report contains a description of the method, where section 3 presents the results. Section 4 presents a discussion of the results, breaking down the reasons for choosing the method, and providing analyses of the features, results and a comparison to another model. Finally, I present a comparison with existing work in the field and further work that could be done. 
+Although sequence data of genes has proliferated since the advent of \textbf{technique}, the classification of protein function has lagged behind significantly.  \textbf{Statistic}. 
+This is partly down to the fact that protein function is a complex labelling task, given the function of proteins may vary under different conditions.  
+In cases where no homologues are present for a gene, knowing the subcellular location of the the protein gives indicator as to the proteins function. 
+Furthermore discovering subcellular location has proven to be vital information in the research of new drugs and vaccinations. 
+As such, automated means of predicting subcelular localization are utmost urgency in todays drug search enbironment.
 
- is Often pro 
-Why is protein function hard to predict? What is protein location hard to predict? Why is it important?
+Since as early as \textbf{blah}, machine learning has been used to predict automatically the subcellular localization of a protein, in an attempt to reduce the cost and time taken to process the proliferating protein sequences.   Traditional methods such as \textbf{experiment}, which were laborious and time intensive, have been replaced in parts by \text{papers}, which are able to make predictions at a high degree of confidence \textit{reference} with only sequence data.
+
+Some these techniques include \textbf{machine learning technique}, which does a \textbf{xyz}, and \textbf{ml technique 2} which does \textbf{this}. 
+
+In this particular experiment we are presented with a training data set \textit{X} proteins, each corresponding to one of four subcellular locations, and we train and evaluated a Random Forests classifier on these data, finally making predictions of locations for \textit{X} unknown proteins.  
+
+Section 2 of this report contains a description of the method used, and Section 3 presents our results. A discussion of these results is then presented in Section 4, along with analyses of the features of the model, a comparison to another model, and our motivation in choosing this method.  Finally, I present a comparison with existing work in the field and further work that could be done, ending with a conclusion.
+%Para 1: What is it & why is it important?
+%Para 2: What are applications?
+%Para 3: What is the history?
+
+%In this analsysi we are presented with predicting 4 classes of locations: w, x, y, z. These are mutually exclusive categories, and our aim was to train a classifier to predict our things. 
+
+%Section 2 of this report contains a description of the method, where section 3 presents the results. Section 4 presents a discussion of the results, breaking down the reasons for choosing the method, and providing analyses of the features, results and a comparison to another model. Finally, I present a comparison with existing work in the field and further work that could be done. 
+
+ %is Often pro 
+%Why is protein function hard to predict? What is protein location hard to predict? Why is it important?
 
 \section{Method}
 
-Data was obtained from four files containing protein sequences in Fasta format, each file corresponding to the subcellular locations of the proteins: cytosolic, secreted, nuclear and mitochondrial.
-The files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
+\subsection{Preprocessing}
+
+Data was obtained from four files containing protein sequences in Fasta format. 
+Each file contained proteins according to its type of subcellular localization: cytosolic, secreted, nuclear and mitochondrial. The number of proteins in each file is presented in Table \ref{Tab:RawData}. 
+These data files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
+
+The data was then fed through a pipeline to extract a number of features from the sequence. Here the open source `BioPython` \textit{reference} module was used, which allowed us to augment sequence data with important characteristics of the amino acids, such as hydrophobicity or molecular weight. These features were : \
+\begin{itemize}
+\item{ Feature 1}
+What is each one. a line or two.
+\item{ Feature 2} 
+\item{ Feature 1} 
+\item{ Feature 1} 
+\item{ Feature 1} 
+\end{itemize}
+. 
 
 
-All sequences were translated into feature vectors by extracting features based on a variety of characteristics, such as sequence length, amino acid composition, and amino acid traits. These are catalogued and explored in greated depth in section 4. 
+The numerical features were then concatenated to form a vector, and divided such that 30\% of the data formed a validation set, with the remainder forming a test set. An anlysis of the features themselves is present in section 4. 
 
+
+\begin{table}[!t]
+\processtable{Sample Data Set By Protein Class\label{Tab:RawData}} {\begin{tabular}{@{}llll@{}}\toprule Cytosolic &
+Nucleic & Secreted & Mitochondrial\\\midrule
+row4 & row4 & row4 & row4\\\botrule
+\end{tabular}}{}
+\end{table}
+
+\subsection{Classifier Training}
+
+A Random Forest Classifier was used in the training of the model, which was done with 70\% of the training data.  The classifier itself was implemented using the open source `scikit-learn` package, and was instantiated with the a \textbf{hyperparameters of X, Y, Z}. These hyperparameters were all chosen in advance using k-fold cross validation, and a grid search on hyper parameters.
+
+\subsection{Cross Validation \& Hyperparameter Tuning}
+
+In order to assess both the strength of model under certain hyperparameters, and the strength of the predictive power of certain features, a 5-fold cross validation score \textit{(what score?)} of the model was used, each time with a 70\%, 30\% train-validation split. In order to search the space of hyperparameters, a grid search was established, visible in plot \textit{plt the cross valid hyper param search}. 
+
+\subsection{Ablation Study}
+
+An ablation study was performed, by removing one feature at a time and testing the 5-fold cross validation score of the model in predicting these data. The results are presented \textit{fig xyz}
+
+\subsection{Gradient Boosting Comparison}
 
 The training set of features was then 
+
+
+\section{Results}
+
+\begin{figure}[h]
+\includegraphics[width=8cm]{confusion}
+\centering
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=8cm]{roc_curve}
+\centering
+\end{figure}
+
+
+\begin{table}[!t]
+\processtable{Predictions of Test Proteins\label{Tab:02}} {\begin{tabular}{@{}lll@{}}\toprule Protein ID  & Subcellular Location & Probabilty \\\midrule
+row1 & row1 & row1 \\
+row2 & row2 & row2 \\
+row3 & row3 & row3 \\
+row4 & row4 & row4 \\\botrule
+\end{tabular}}{This is a footnote}
+\end{table}
+
+
+
+    - Results of accuracy
+    - Confusion matrix
+    - ablation study
+    - results compared to xgboost
+
+
+\newpage
+yip
 \newpage
 
 Obtained data from X files, and mixed, shuffle and split into a train and validation split. Since the proteins are all non homolgoues, no need to arrange by family and could split anyway. 
@@ -71,7 +157,8 @@ What did you do?
     - compared with a model (gradient boosting?)
     - ablation study
 
-\section{Results}
+
+
     - Results of accuracy
     - Confusion matrix
     - ablation study
