@@ -1,5 +1,6 @@
 \documentclass{bioinfo}
-\copyrightyear{2015} \pubyear{2015}
+\copyrightyear{2015} 
+\pubyear{2015}
 
 \access{ }
 \appnotes{Manuscript Category}
@@ -9,7 +10,7 @@
 
 \subtitle{Protein Classification}
 
-\title[short Title]{Predicting Protein Origin from Sequence Data}
+\title[short Title]{Predicting Protein Subcellular Localization from Sequence Data}
 \author[Sample \textit{et~al}.]{Eric Hambro\,$^{\text{\sfb 1,}*}$}
 \address{$^{\text{\sf 1}}$Department, Institution, City, Post Code, Country}
 
@@ -21,7 +22,7 @@
 
 \abstract{\textbf{Motivation:}  
 Deriving protein function from sequence level data can provide.  Using features derived from the sequence and a random forests model was trained to classify protein sequences according to their location of use. Using a validation set of blah, an accuracy prediction accuracy of blah was reported, along with an F1 score of blah.\\
-\textbf{Results:} Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text
+\textbf{Results:} Lorem ipsum Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text\\
 \textbf{Availability:} Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text\\
@@ -30,6 +31,22 @@ Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text\\
 
 \maketitle
 
+
+%% TODO 
+% * Introduction & fill in with experiments
+% * Subcellular Localization & transport citations
+% * Bagging & Boosting Theoretical Background
+% * Remove Multiclass Random Forest
+% * Results in Tables for categorical, train valid test accuracy
+% * Results in tables for test f1, test acc, test rocauc
+% * Ablation Study??
+% * Prediction of Proteins
+% * Normalise CM
+% * Error Bars on RocAuc
+% * Bagging Boosting Compare models
+% * Further Work
+% * Conclusion
+% * Abstract
 \section{Introduction}
 
 
@@ -58,28 +75,49 @@ Section 2 of this report contains a description of the method used, and Section 
  %is Often pro 
 %Why is protein function hard to predict? What is protein location hard to predict? Why is it important?
 
+\section{Background}
+
+\subsection{Subcellular Localization \& Transport}
+
+The subcellular location of proteins is often highly specific, as proteins are highly adapted to fulfil their specialist functions in a eukaryotic cell. 
+As a result, the target location of a protein is often in some way encoded into the structure of the protein, in what's known as a target peptide (if heading to an organelle) or signal peptide (if secreted). These peptides can vary greatly in structure, depending of the end location.
+
+\begin{enumerate}
+  \item {\textbf{Targeting Secretion}} 
+
+  In the case of a proteins headed toward secretion - either to the extra-cellular area, or even just the cell membrane - the peptide encodings are referred to as \textit{signal peptides}. They are often 16-30 amino acids long, occuring near the N-terminus (the start) of the protein. Often they include a 5-16 residue section that is particularly hydrophobic. These hydrophobic residues often form an $\alpha$-helix, and are often removed by a signal peptidase, when they reach their location.
+
+  \item {\textbf{Targeting Mitochondria}} 
+
+  In the case of proteins headed to mitochondria, a \textit{mitochondrial targeting signal} of approximately 10 to 70 peptides long is generally found at the N terminus of the protein. Like signal peptides, some of these residues form a helix, although generally these consist of alternating positively charged and hydrophobic amino acids.
+
+  \item {\textbf{Into The Nucleus}} 
+
+  Proteins that require importing into the nucleus often contain a \textit{Nuclear Localization Sequence}, which may consist of a sequence amino acids that are positively charged (often arginine and lysine) exposed on the surface of the protein. As a result these proteins can be anywhere in the chaine.. 
+
+   \item {\textbf{Out Of the Nucleus (Into The Cytoplasm)}} 
+
+  Proteins that are are being exported out of the nucleus and into the cytoplasm are often tagged with a \textit{Nuclear Export Signal}. Often these peptide sequences consist of hydrophobic residues (such as leucine), interspersed with other amino acids.
+
+
+
+\end{enumerate} 
+
+
+% In the case of a proteins headed toward secretion, these encodings are referred to as signal peptides. They are often 16-30 amino acids long, occuring near the N-terminus (the start) of the protein.In the case of a proteins headed toward secretion, these encodings are referred to as signal peptides. They are often 16-30 amino acids long, occuring near the N-terminus (the start) of the protein.
+% These small peptides are called \textit{signal peptides}
+
+\subsection{Bagging \& Boosting}
+This investigation compares two machine learning models to a benchmark random classifier, selecting the best. These two models are examples of common machine learning technique.
+
+\subsubsection{Random Forests}
+
+This is a sentence about random forests, how they work and such. They are quite clever and I might even have a maths equations about them  and how clever they are.
+\subsubsection{AdaBoost}
+
+This is a sentence about boosting. I'm not fully clear on what that is but when I know I'll be sure to put it here - with an equation!
+
 \section{Method}
-
-\subsection{Preprocessing}
-
-Data was obtained from four files containing protein sequences in Fasta format. 
-Each file contained proteins according to its type of subcellular localization: cytosolic, secreted, nuclear and mitochondrial. The number of proteins in each file is presented in Table \ref{Tab:RawData}. 
-These data files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
-
-The data was then fed through a pipeline to extract a number of features from the sequence. Here the open source `BioPython` \textit{reference} module was used, which allowed us to augment sequence data with important characteristics of the amino acids, such as hydrophobicity or molecular weight. These features were : \
-\begin{itemize}
-\item{ Feature 1}
-What is each one. a line or two.
-\item{ Feature 2} 
-\item{ Feature 1} 
-\item{ Feature 1} 
-\item{ Feature 1} 
-\end{itemize}
-. 
-
-
-The numerical features were then concatenated to form a vector, and divided such that 30\% of the data formed a validation set, with the remainder forming a test set. An anlysis of the features themselves is present in section 4. 
-
 
 \begin{table}[!t]
 \processtable{Sample Data Set By Protein Class\label{Tab:RawData}} {\begin{tabular}{@{}llll@{}}\toprule Cytosolic &
@@ -88,37 +126,123 @@ row4 & row4 & row4 & row4\\\botrule
 \end{tabular}}{}
 \end{table}
 
-\subsection{Classifier Training}
+\subsection{Preprocessing}
 
-A Random Forest Classifier was used in the training of the model, which was done with 70\% of the training data.  The classifier itself was implemented using the open source `scikit-learn` package, and was instantiated with the a \textbf{hyperparameters of X, Y, Z}. These hyperparameters were all chosen in advance using k-fold cross validation, and a grid search on hyper parameters.
+Data was obtained from four files containing protein sequences in Fasta format. 
+Each file contained proteins according to its type of subcellular localization: cytosolic, secreted, nuclear and mitochondrial. 
+The number of proteins in each file is presented in Table \ref{Tab:RawData}. 
+These data files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
+This was done, and a training-validation split of 70\%-30\% was set.
 
-\subsection{Cross Validation \& Hyperparameter Tuning}
+The data was then fed through a pipeline to extract a number of features from the sequence.
+These features all corresponded to floating point numbers, and so were concatenated to form a 75-dimensional feature vector, that would be used to train the models. 
+An anlysis of the features themselves is present in section 4. 
 
-In order to assess both the strength of model under certain hyperparameters, and the strength of the predictive power of certain features, a 5-fold cross validation score \textit{(what score?)} of the model was used, each time with a 70\%, 30\% train-validation split. In order to search the space of hyperparameters, a grid search was established, visible in plot \textit{plt the cross valid hyper param search}. 
 
-\subsection{Ablation Study}
+\subsection{Features}
 
-An ablation study was performed, by removing one feature at a time and testing the 5-fold cross validation score of the model in predicting these data. The results are presented \textit{fig xyz}
+The open source `BioPython` \textit{reference} module was used to extract features from the sequence data, allowing us to augment raw residue sequence data with important characteristics of the amino acids, such as isoelectronic point or molecular weight. In total 75 features were created, although many of these could be grouped into the same category. These features were:
 
-\subsection{Gradient Boosting Comparison}
+\begin{itemize}
 
-The training set of features was then 
 
+\item{ \textbf{Protein Length} } - An integer representing the length of the protein sequence, in residues.
+\item{ \textbf{Amino Acid Composition} } - A float created for each amino acid, corresponding to the percentage composition of that amino amino acid in the protein.
+\item{ \textbf{Aromaticity}} - A corresponding to a measure of the aromaticity of the molecule according to Lobry et al\textit{1994}. This is measured by adding the frequencies of residues Phenylalanine, Tryptophan and Tyrosine, in the sequence of the protein.
+\item{ \textbf{Isoelectric Point}} - A float representing the isoelectric point of the protein according to values taken by Bjellqvist et al \textit{ref}.
+\item{ \textbf{Molecular Weight}} - A float simply molecular weight of the protein. 
+\item{ \textbf{Secondary Structure Features}} - Three separate features were created indicating the fraction of amino acids which tend to be either $\alpha$-helixes, $\beta$-sheets, or \text{turns/loops}. These amino acids were: $\alpha$ - Val, Ile, Tyr, Phe, Trp, Leu;   $\beta$ - Glu, Met, Ala, Leu; \textit{loops} -  Asn, Pro, Gly, Ser
+\item{ \textbf{Start/End Amino Acid Composition} - Two floats were created for each amino acid, according to the percentage composition of that amino amino acid in the first and last 20 residues of the protein.}
+
+\end{itemize}
+
+These features were chosen as they had a high impact on the on the remaining the accuracy of the classifier. The importance of each of these features to various classifications is examined in section 4.  
+
+
+\subsection{Classifier Training \& Tuning}
+
+A number of classifiers were trained to investigate the best possible model in predicting the subcellular location. These models were:
+
+\begin{itemize}
+  \item {Logistic Regression}
+  \item {Random Forests Classifier - MultiClass}
+  \item {Random Forests Classifier - One-Vs-Rest (4 Models)}
+  \item {Adaboost Classifier}
+\end{itemize}
+
+All classifiers were implemented using the open source `scikit-learn` package. In all cases, model parameters were fit with a 5-fold cross validation. Hyperparameters were tuned using a grid search \textbf{plot}, and chosing the parameters that had the best 5-fold cross validation score of accuracy. 
+
+In some cases, (Logistic Regression \& Random Forests (One-Vs-Rest)), multiple models were trained, each solely to predict one class. In these cases, `scikit-learn' provided the best means for ensembling these methods, using it's OneVsRestClassifier, to provide estimates of scores. 
+
+\subsection{Benchmarks}
+
+A raw, bottom level benchmark for this investigation was a random classifier. This classifer was simply an implementation of a categorical distribution, with the probability vector learnt from the frequency of each category in the training dataset.
+
+$$x \sim Categorical(\mathbf{p}) \text{ where } \mathbf{p} = [0.25, 0.25, 0.25, 0.25]$$
+
+
+\subsection{Ablation Study \& Feature Evaluation }
+To investigate and evaluate the performance of certain features, an ablation study was performed on the each of the above categories.
+An ablation study was performed, by removing one feature at a time and testing the 5-fold cross validation score of the model in predicting these data. 
+The results are presented \textit{fig xyz}
 
 \section{Results}
 
-\begin{figure}[h]
-\includegraphics[width=8cm]{confusion}
-\centering
-\end{figure}
+\subsection{Final Hyperparameter}
+For each model, grid search found the following hyperparameters provided the best test cross validation score.
 
-\begin{figure}[h]
-\includegraphics[width=8cm]{roc_curve}
-\centering
-\end{figure}
+\textbf{table hyper params }
 
 
-\begin{table}[!t]
+\begin{table}[!h]
+\processtable{Hyperparameters of Model\label{Tab:hyperp}} {\begin{tabular}{@{}lll@{}}\toprule Model  & Hyperparameter & Settings \\\midrule
+Categorical (Benchmark) & N.A. &  N.A.   \\
+% Logistic Regression & param1 & row1 \\
+% Logistic Regression & param2 & row1 \\
+Random Forests Classifier (MC) & estimators & 450 \\
+Random Forests Classifier (OvM)& estimators & 450 \\
+Adaboost Classifier & estimators & 200 \\
+Adaboost Classifier & learning rate & 0.25 \\\botrule
+\end{tabular}}{}
+\end{table}
+
+% \begin{table}[!h]
+% \processtable{Hyperparameters of Model\label{Tab:hyperp}} {\begin{tabular}{@{}lll@{}}\toprule Model  & Hyperparameter & Settings \\\midrule
+% Categorical & N.A. &  N.A.   \\
+% Logistic Regression & param1 & row1 \\
+% Logistic Regression & param2 & row1 \\
+% Random Forests Classifier (MC) & estimators & 450 \\
+% Random Forests Classifier (OvM)& estimators & 450 \\
+% Adaboost Classifier & estimators & $300$ \\
+% Adaboost Classifier & learning_rate & $0.25$ \\\botrule
+% \end{tabular}}{}
+% \end{table}
+
+
+\subsection{Model Scores}
+
+All models were evaluated on final held-out test set. Calculations were made of the accuracy, the F1 score and Area Under Curve of the Returning Operator Characteristic (AUCROC)
+
+\begin{table}[!h]
+\processtable{Hyperparameters of Models\label{Tab:hyperp}} {\begin{tabular}{@{}llll@{}}\toprule Model  & Cross Val Acc & Test Acc &F1 Score \\\midrule
+Categorical (Benchmark) & x & Test Acc &row1  \\
+Random Forests Classifier (MC) & y &  Test Acc &row2 \\
+Random Forests Classifier (OvM)& z &  Test Acc &row3 \\
+Adaboost Classifier & w & row4 & row1\\\botrule
+\end{tabular}}{}
+\end{table}
+
+\subsection{Plots}
+
+Finally, to investigate the importance of various features, the ROC curve was plotted, for the best model, along with the confusion matrix, and the importance weights for the random forests classifier. These are presented \textit{here}.
+
+% A final model was produced that was able to achieve a classification score of 68.2\%.  The returning operator characteristic (ROC) curves were plotted for each predictor in the class and are shown in table \textit{blah}. The confusion matrix was also plotted for the test set, indicating where classifications were errornious. Finally the predictions for the unknown test scores are presented in table {XYZ}.
+
+\subsection{Final Predictions}
+
+Given the above evaluation of the models, a Random Forest Model was selected to give a predictions of \textbf{YYY} hitherto unclassified proteins. This prediction, along with per centage confidence scores, is given in table \textit{blah}
+
+\begin{table}[!h]
 \processtable{Predictions of Test Proteins\label{Tab:02}} {\begin{tabular}{@{}lll@{}}\toprule Protein ID  & Subcellular Location & Probabilty \\\midrule
 row1 & row1 & row1 \\
 row2 & row2 & row2 \\
@@ -128,18 +252,121 @@ row4 & row4 & row4 \\\botrule
 \end{table}
 
 
+\section{Discussion}
 
-    - Results of accuracy
-    - Confusion matrix
-    - ablation study
-    - results compared to xgboost
+\subsection{Classifier Comparison}
+
+From the above results it is quite clear that both boosting and bagging methods far outperformed the benchmark method. 
+The woeful performance of $X$ accuracy is to be expected for a model that doesn't take into account any of the sequence data, or underlying features. 
+
+It is also clear that Random Forests outperforms AdaBoost, securing a decisive performance improvement of $X$ compared to $Y$. In both cases this \textit{who got more false positives, false negatives}.
+
+This performance difference is likely down to\textit {critique of bagging vs boosting}. 
+\begin{figure}[!h]
+\includegraphics[width=8cm]{confusion}
+\centering
+\end{figure}
+
+\begin{figure}[!h]
+\includegraphics[width=8cm]{roc_curve}
+\centering
+\end{figure}
+
+\subsection{Error Analysis}
+
+In inspecting our best performing model, Random Forests, more closely, it is clear that the errors in the model were not distributed evenly across categories.
+Instead it appears that the greatest source error in fact come from misclassifying nuclear labels for cytosolic ones. This can be seen clearly from the confusion matrix presented in \textit{confusion matrix}. Almost $X\%$ of nuclear proteins are misclassified as cytosolic, and $Y\%$ as cytosolic as nuclear.
+
+This misclassification is made all the more evident by looking at the Returning Order Characteristic (ROC) curves, where all the classifiers are plotted together. 
+From these graphs, it is immediately clear that the best classifier is the secreted class, with the area under curve (AUC) of 0.98, followed by the mitochondrial class of 0.93. The worst performer is the cytosolic class (0.79) followed by the nuclear class (0.83).
+
+There are a number of reasons why it is conceivable that these particular protein classifiers (cytosolic and nuclear) should perform worse than the other two categories (secreted and mitochondrial). 
+For one thing, there are a number of proteins that frequently move between the nucleus and the cytoplasm, meaning that they may posses both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}. 
+This mixup of very distinct features (in the form of target peptides) would likely lead the classifiers to struggle to distinguish the correct class in ambiguous cases.
+
+Furthermore, it is likely that mitochondrial proteins and secreted proteins may have important properties that are unrelated to target peptides but still show up in our choice of features. For instance, since secreted proteins need to cross the cell membrane, it is possible features such as very large size or certain peptide make up, might make this action difficult. There may exist alternative restrictions on mitochondrial proteins, that need to be adapted to help in respiration, which might also restrict the protein's structure.
+
+At any rate it is clear from the ROC curves in particular that secretion is particularly well detected, with \textit{comment about false positives etc}, nuclear and cytoplasmic classes are easier to confuse. An analysis of the exact features that could be responsible for this are presented in the next section.
+
+
+% As mentioned previously, peptides destined for a certain subcellular location often have sequences of peptides encoding this. It is likely these are strong features in this sequence analysis, and will be examined in the netx Furthermore, it is likely that peptides operating in a certain part of the cell might have specific features, related to it specific function
+
+% The strength of the secreted and mitochondrial classes i two classes as classifiers is at least partly down to the very specific nature of proteins these locations. For a protein to be secreted, there is a requirement that it is able to be transported across the cell membrane, and this puts some restrictions on the form the protein can take. \textbf{what restriction}. Similarly the mitochondrial proteins are highly likely to be used in respiration in some respect and so are likely again to have features that indicate this. 
+% However, there are many proteins that are frequently transported between the nucleus and the cytosol, meaning that it can be hard to distinguish these proteins from features.
+% A more specific look at the features, and what they can be used to discern, is examined in the following section.
+\begin{figure}[!h]
+\includegraphics[width=8cm]{cyto_import}
+\centering
+% \end{figure}\begin{figure}[h]
+\includegraphics[width=8cm]{mito_import}
+\centering
+% \end{figure}\begin{figure}[h]
+\includegraphics[width=8cm]{nucleus_import}
+\centering
+% \end{figure}\begin{figure}[h]
+\includegraphics[width=8cm]{secreted_import}
+\centering
+\end{figure}
+
+\subsection{Features Analysis}
+
+Perhaps more interesting than the comparison of the two different models is the close comparison of the features that have had a significant impact on the model.
+Thankfully, our One-Vs-Rest Random Forest Model has an in built way of examining the features, via the feature importances.
+These are displayed in figure \text{ref importances}.
+
+The first thing to notice is the relative scales of the four graphs, in comparison to one another. The secreted classifier has a much stronger set of "significant" features, than all the other classes. In the case of comparison to nucleus and cytoplasmic classes, secreted's top feature is over twice the importance of the latter classes highest feature. Furthermore its top 4 features features all have higher importances than the highest single feature for these classes.  This indicates that there are distinct "killer features" for this class, and it appears they are highly tied to the fraction of Leucines and Cysteines at the start of the sequence, and the molecular weight and sequence length. \textbf{investigate data?}
+
+Next to notice is that, as mentioned in the initial background, mitochondrial proteins also have importances supporting the target peptides alluded to. 
+\textit{Mitochondrial targeting signals} sometimes consist of alternating positively charged and hydrophobic amino acids forming a helix, so unsurprisingly our strongest features include features noting isoelectricity, structural helices, and the presence of positively charged Arginine at the start of the sequences.
+
+When it comes to nuclear and cytosolic proteins, it's worth noting that the second and third best importance features are shared - indicating the difficulty these  classes might have in distinguishing themselves.  Furthermore these features - molecular weight and sequence length - are broad macroscopic features that do not really indicate a particular target sequence, and also show why it might be hard to classify these proteins. Even the "strongest feature" for these two classes is a macroscropic feature - isoelectric point, and percentage of "common helix" amino acids, indicating our set of features haven't been able to pick up the nuclear target peptides.
+
+Finally it is worth noting that none of the most important features correspond to peptides at the end of the sequence.  This is fairly good evidence that something important happens at the N-terminus of a protein, and  supports background theory that this is where target peptides are often found.
+
+
+\subsection{Further Improvements}
+
+* Hydrophobicity
+* Specific Sequences
+* Gradient Boosted
+* Neural algorithm with more data
+
+
+
+
+%     - Results of accuracy
+%     - Confusion matrix
+%     - ablation study
+%     - results compared to xgboost
+
+
+% Judging by the results of the confusion matrix and ROC Curves, it is clear the model greatly succeed in labelling some categories while struggling with others. In particular, it was able to classify secreted and mitochondrial proteins with much more success than nuclear and cytosolic proteins. \textit{X\%} of secreted proteins were classified correctly, along with \textit{X\%} of mitochondrial proteins. \textit{Precision and recall}. 
+
+% These locations are it is likely that these locations 
+
+%  This is likely both  down the similarity of the nuclear and cytosolic proteins, and the lack of an appropriate discriminating feature to distinguish their similarty.
+
+
+  
+
+
+% \subsection{Classifier Analysis}
+
+% \subsection{Model Evaluation Analysis}
+
+\subsection{Existing Approaches}
+   - Exam
+
+
+\section{Further Work}
+\section{Conclusions}
 
 
 \newpage
 yip
 \newpage
 
-Obtained data from X files, and mixed, shuffle and split into a train and validation split. Since the proteins are all non homolgoues, no need to arrange by family and could split anyway. 
+Obtained data from X files, and mixed, shuffle and split into a train and validation split. Since the proteins are all non homologues, no need to arrange by family and could split anyway. 
 
 Then took these files and processed them into feature vectors, using the bipython module. These extracted, x features from the sequence. 
 

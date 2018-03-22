@@ -22,7 +22,7 @@ def early_late_fractions(seq):
     start_total = sum(start_letters.values())
     end_letters = Counter(last)
     end_total = sum(end_letters.values())
-    
+
     alphabet = "ACDEFGHIJKLMNOPQRSTUVWVYZ"
     features = {}
     features.update({"start_letter_{}".format(l): (start_letters[l]/start_total) for l in alphabet})
@@ -38,12 +38,12 @@ def early_late_ngrams(seq):
 
     start_trigrams = Counter([ start[i:i+2] for i in range(window-2) ])
     end_trigrams = Counter([ end[i:i+2] for i in range(window-2) ])
-    
+
     features = {}
 
     features.update({"start_{}".format(t):c for t,c in start_trigrams.items() })
     features.update({"end_{}".format(t):c for t,c in end_trigrams.items() })
-    return features 
+    return features
 
 def prot_param_features(seq):
     features = {}
@@ -54,7 +54,7 @@ def prot_param_features(seq):
     aa = pa.get_amino_acids_percent()
     aa_dict = {"frac_{}".format(k):v for k,v in aa.items()}
     features.update(aa_dict)
-    
+
     # 2. Aromaticity
     features["aromaticity"] = pa.aromaticity()
 
@@ -63,11 +63,11 @@ def prot_param_features(seq):
 
     # 4. Molecular Weight
     try:
-        features["molecular_weight"] = pa.molecular_weight()
+        features["mol_weight"] = pa.molecular_weight()
     except ValueError:
         replaced = str(seq.seq).replace('X', 'G').replace('B', 'N')
-        features["molecular_weight"] = ProteinAnalysis(replaced).molecular_weight()
-        
+
+
     # 5. Flexibility
     # try:
     #     features["flexibility"] = np.mean(pa.flexibility())
@@ -79,6 +79,7 @@ def prot_param_features(seq):
     struc = ["struc_helix", "struc_turn", "struc_sheet"]
     ss = pa.secondary_structure_fraction()
     features.update(dict(zip(struc, ss)))
+
 
     return features
 
@@ -101,11 +102,11 @@ def map_sequences_to_features(data_tuples):
     X_features = list(map(sequence_to_features, X))
     X_feature_vec, keys = dict_to_vec(X_features, filter_out=None)
     print(keys)
-    return matrices_to_tuples(X_feature_vec, Y)
+    return matrices_to_tuples(X_feature_vec, Y), keys
 
 if __name__=="__main__":
 
     import random
     two_proteins = load_files()[0:2]
- 
+
     print(map_sequences_to_features(two_proteins))
