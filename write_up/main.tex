@@ -326,11 +326,15 @@ Finally it is worth noting that none of the most important features correspond t
 
 \subsection{Further Improvements}
 
-* Hydrophobicity
-* Specific Sequences
-* Gradient Boosted
-* Neural algorithm with more data
+Although this model performed well in distinguishing the secreted and mitochondrial proteins there are a number of additional features that may particularly improve future implementations of this model. 
 
+First, some measure of hydrophobicity would be a valuable additional feature. This wasn't added due to the lack of there being an available scale in the BioPython module, but it is likely this addition would help to pick up the hydrophobicity of of elements found in \textit{either NLS or NES sections of the sequence}, helping to distiguish nuclear and cytoplasmic proteins.
+
+Furthermore it should be worth exploring and searching for specific target patterns within the model. I attempted to search for these by creating a feature for all possible "bigrams" and "trigrams" of residues, and looking at importances, but the high dimensionality made learning difficult. Instead, if one had specific examples of known target peptides this feature would likely greatly help classification, without adding too much to computational complexity.
+
+Finally it may be worth trying gradient boosting algorithms or neural networks. Gradient boostin algorithms such as XGBoost \textit{Explain why gradient boosting maybe better 2 lines}. Neural networks also have significant performance, but mainly on high data sets. Given the relatively small dataset (only a few \textit{thousand points}), neural methods may not be suited to this particular small task.
+
+\section{Conclusions}
 
 
 
@@ -354,12 +358,7 @@ Finally it is worth noting that none of the most important features correspond t
 
 % \subsection{Model Evaluation Analysis}
 
-\subsection{Existing Approaches}
-   - Exam
 
-
-\section{Further Work}
-\section{Conclusions}
 
 
 \newpage
