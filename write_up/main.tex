@@ -22,10 +22,10 @@
 
 \abstract{\textbf{Motivation:}  
 Deriving protein function from sequence level data can provide.  Using features derived from the sequence and a random forests model was trained to classify protein sequences according to their location of use. Using a validation set of blah, an accuracy prediction accuracy of blah was reported, along with an F1 score of blah.\\
-\textbf{Results:} Lorem ipsum Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text
-Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text\\
-\textbf{Availability:} Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text\\
+\textbf{Results:} Lorem ipsum Text  Text Text Text Text Text
+  Text Text Text Text Text Text\\
+\textbf{Availability:} Text  Text Text Text Text
+  Text\\
 \textbf{Contact:} \href{eric.hambro.17@ucl.ac.uk}{eric.hambro.17@ucl.ac.uk}
 }
 
@@ -79,25 +79,33 @@ Section 2 of this report contains a description of the method used, and Section 
 
 \subsection{Subcellular Localization \& Transport}
 
-The subcellular location of proteins is often highly specific, as proteins are highly adapted to fulfil their specialist functions in a eukaryotic cell. 
-As a result, the target location of a protein is often in some way encoded into the structure of the protein, in what's known as a target peptide (if heading to an organelle) or signal peptide (if secreted). These peptides can vary greatly in structure, depending of the end location.
+In eukaryotic cells, proteins are often highly adapted to fulfilling their specialist functions in the cell.
+These functions can be very localized within organelles or other parts of the cell, and so the proteins are too adapted to the specific subcellular location in the cell. 
+In order to faciliate transport of protein to its location, often a location signifier is in some way encoded into the structure of the protein.
+This what's known as a target peptide (if heading to an organelle) or signal peptide (if secreted). 
+These peptides can vary greatly in structure, depending on the final destination, and can be explored in greater depth in \cite{Alb00}. 
+Sometimes they are removed by a signal peptidase, when they reach their destinations.
+Below are some of the known features of signal and target peptides, as mentioned in the above book.
 
 \begin{enumerate}
   \item {\textbf{Targeting Secretion}} 
+%https://www.ncbi.nlm.nih.gov/books/NBK6322/
 
-  In the case of a proteins headed toward secretion - either to the extra-cellular area, or even just the cell membrane - the peptide encodings are referred to as \textit{signal peptides}. They are often 16-30 amino acids long, occuring near the N-terminus (the start) of the protein. Often they include a 5-16 residue section that is particularly hydrophobic. These hydrophobic residues often form an $\alpha$-helix, and are often removed by a signal peptidase, when they reach their location.
+  Proteins headed toward secretory pathways often contain short amino acid encodings (say 16-30 amino acids long), occuring near the N-terminus of the protein. Often they include a domain or sequence that is particularly hydrophobic, and these hydrophobic residues may form an $\alpha$-helix. 
 
   \item {\textbf{Targeting Mitochondria}} 
 
-  In the case of proteins headed to mitochondria, a \textit{mitochondrial targeting signal} of approximately 10 to 70 peptides long is generally found at the N terminus of the protein. Like signal peptides, some of these residues form a helix, although generally these consist of alternating positively charged and hydrophobic amino acids.
+  In the case of proteins headed to mitochondria, a \textit{mitochondrial targeting signal} of a peptide signal is often found at the N terminus of the protein. These often consist of alternating positively charged and hydrophobic amino acids, that come together to form an amphiphilic $\alpha$-helix. These this pattern (of positively charged residues on one side, and uncharged hydrophobic residues on another) is what is primarily recognised by the receptor proteins, rather than a specific sequence.
 
   \item {\textbf{Into The Nucleus}} 
 
-  Proteins that require importing into the nucleus often contain a \textit{Nuclear Localization Sequence}, which may consist of a sequence amino acids that are positively charged (often arginine and lysine) exposed on the surface of the protein. As a result these proteins can be anywhere in the chaine.. 
+  Proteins that require importing into the nucleus often contain a \textit{Nuclear Localization Signal}, which may consist of a sequence amino acids that are positively charged (often arginine and lysine) exposed on the surface of the protein. In contrast with the other target peptides, it appears these signals can occure almost anywhere in the chain, and often form loops. Many of these are still uncharacterised.  
 
-   \item {\textbf{Out Of the Nucleus (Into The Cytoplasm)}} 
+   \item {\textbf{Out of the Nucleus (Into The Cytosol)}} 
 
-  Proteins that are are being exported out of the nucleus and into the cytoplasm are often tagged with a \textit{Nuclear Export Signal}. Often these peptide sequences consist of hydrophobic residues (such as leucine), interspersed with other amino acids.
+  Proteins that are are being exported out of the nucleus and into the cytosol are often tagged with a \textit{Nuclear Export Signal}. 
+  A known example of \textit{Nuclear Export Signal} consists of a chain of several (hydrophobic) leucines, interspersed with other amino acids, between them. 
+  Since some proteins frequently move between the nucleus and the cytosol, it is common for some proteins to contain both  \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}, which are effectively controlled by the cell to direct movement.
 
 
 
@@ -108,14 +116,31 @@ As a result, the target location of a protein is often in some way encoded into 
 % These small peptides are called \textit{signal peptides}
 
 \subsection{Bagging \& Boosting}
-This investigation compares two machine learning models to a benchmark random classifier, selecting the best. These two models are examples of common machine learning technique.
+Our investigation compares two machine learning models to a benchmark random classifier, selecting the best. 
+These two models (Random Forests and AdaBoost) were selected on account of being good are examples of common ensembling techniques: \textit{bagging} and \textit{boosting}.
 
-\subsubsection{Random Forests}
+\subsubsection{Bagging \& Random Forests}
 
-This is a sentence about random forests, how they work and such. They are quite clever and I might even have a maths equations about them  and how clever they are.
-\subsubsection{AdaBoost}
+Bootstrap aggregation (or \textit{bagging}) is an ensemble method to the reduce the variance of a prediction when using high variance classifiers. 
+It involves, selecting many subsamples of the training data, and generating estimates from the average performance of classifiers trained on this data. 
+Thanks to this averaging of predictions, overfitting our training data becomes less of a risk, since each classifier can overfit to it's subsection of the data without impacting the average too greatly in the end.
 
-This is a sentence about boosting. I'm not fully clear on what that is but when I know I'll be sure to put it here - with an equation!
+In a Random Forest, our high-variance classifier is a decision tree, and we adapt the \textit{bagging} algorithm to improve performance.
+Specifically we only give each individual classifier access to a random subset of the features of the data, at training time.
+The aim of this is to stop any correlation on the decision trees that may arise from their greedy behaviour, as they look through variables to select the best split point. 
+By only having access to a random subset of features, the decision trees become less correlated, and the Random Forest algorithm produces a better 'averaged' estimate.
+
+\subsubsection{Boosting \& AdaBoost}
+
+The AdaBoost algorithm is a different method that uses a ensemble technique known as \textit{boosting}.
+Instead of a combining votes from many high variance normal classifiers (like a decision tree), \textit{boosting} involves learning by combining lots of weak learners (like a decision stump), by training the on particularly chosen subsections of the data, and combining votes in a particular way. 
+Specifically, each successive weak-learner is trained on selections of the data that aim to emphasise the most misclassified data points. 
+These learners are then weighted by their error, to provide the overall classification.
+
+%%% IF NEED PADDING: \textbf{In more detail, the algorithm goes as follows:}
+
+
+
 
 \section{Method}
 
@@ -132,12 +157,11 @@ Data was obtained from four files containing protein sequences in Fasta format.
 Each file contained proteins according to its type of subcellular localization: cytosolic, secreted, nuclear and mitochondrial. 
 The number of proteins in each file is presented in Table \ref{Tab:RawData}. 
 These data files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
-This was done, and a training-validation split of 70\%-30\% was set.
+The data was then split into a test set that would be held out for final evalution (10\%), and a train and validation set (90\%) that could be used to tune hyperparameters. 
+%\textbf{This was done, and a training-validation split of 70\%-30\% was set.}
 
 The data was then fed through a pipeline to extract a number of features from the sequence.
 These features all corresponded to floating point numbers, and so were concatenated to form a 75-dimensional feature vector, that would be used to train the models. 
-An anlysis of the features themselves is present in section 4. 
-
 
 \subsection{Features}
 
@@ -148,11 +172,11 @@ The open source `BioPython` \textit{reference} module was used to extract featur
 
 \item{ \textbf{Protein Length} } - An integer representing the length of the protein sequence, in residues.
 \item{ \textbf{Amino Acid Composition} } - A float created for each amino acid, corresponding to the percentage composition of that amino amino acid in the protein.
-\item{ \textbf{Aromaticity}} - A corresponding to a measure of the aromaticity of the molecule according to Lobry et al\textit{1994}. This is measured by adding the frequencies of residues Phenylalanine, Tryptophan and Tyrosine, in the sequence of the protein.
+\item{ \textbf{Aromaticity}} - A float corresponding to a measure of the aromaticity of the molecule according to Lobry et al\textit{1994}. This is measured by adding the frequencies of residues phenylalanine, tryptophan and tyrosine, in the sequence of the protein.
 \item{ \textbf{Isoelectric Point}} - A float representing the isoelectric point of the protein according to values taken by Bjellqvist et al \textit{ref}.
 \item{ \textbf{Molecular Weight}} - A float simply molecular weight of the protein. 
-\item{ \textbf{Secondary Structure Features}} - Three separate features were created indicating the fraction of amino acids which tend to be either $\alpha$-helixes, $\beta$-sheets, or \text{turns/loops}. These amino acids were: $\alpha$ - Val, Ile, Tyr, Phe, Trp, Leu;   $\beta$ - Glu, Met, Ala, Leu; \textit{loops} -  Asn, Pro, Gly, Ser
-\item{ \textbf{Start/End Amino Acid Composition} - Two floats were created for each amino acid, according to the percentage composition of that amino amino acid in the first and last 20 residues of the protein.}
+\item{ \textbf{Secondary Structure Features}} - Three separate features were created indicating the fraction of amino acids which tend to be either $\alpha$-helixes, $\beta$-sheets, or turns/loops. These amino acids were: $\alpha$ - Val, Ile, Tyr, Phe, Trp, Leu;   $\beta$ - Glu, Met, Ala, Leu; \textit{loops} -  Asn, Pro, Gly, Ser
+\item{ \textbf{Start/End Amino Acid Composition} - Two floats were created for each amino acid, according to the percentage composition of that amino amino acid in the first and last 20 residues of the protein respectively.}
 
 \end{itemize}
 
@@ -164,15 +188,17 @@ These features were chosen as they had a high impact on the on the remaining the
 A number of classifiers were trained to investigate the best possible model in predicting the subcellular location. These models were:
 
 \begin{itemize}
-  \item {Logistic Regression}
-  \item {Random Forests Classifier - MultiClass}
+  \item {Categorical Distribution}
+  % \item {Random Forests Classifier - MultiClass}
   \item {Random Forests Classifier - One-Vs-Rest (4 Models)}
   \item {Adaboost Classifier}
 \end{itemize}
 
-All classifiers were implemented using the open source `scikit-learn` package. In all cases, model parameters were fit with a 5-fold cross validation. Hyperparameters were tuned using a grid search \textbf{plot}, and chosing the parameters that had the best 5-fold cross validation score of accuracy. 
+All classifiers were implemented using the open source `scikit-learn` package. In all cases, model parameters were fit with a 5-fold cross validation, on the train and validate set mentioned previously. Hyperparameters were tuned using a grid search \textbf{plot}, and chosing the parameters that had the best 5-fold cross validation score of accuracy. 
 
-In some cases, (Logistic Regression \& Random Forests (One-Vs-Rest)), multiple models were trained, each solely to predict one class. In these cases, `scikit-learn' provided the best means for ensembling these methods, using it's OneVsRestClassifier, to provide estimates of scores. 
+In the Random Forests Model, multiple models were trained, each solely to predict one class. Although this is strictly unnecesssary for a Random Forests Classifier, it provides the additional advantage of allowing for interpretable feature importances, and more interpretable analysis of the individual clusters. A single multi class Random Forests Model was also implemented, though this was found to have the same accuracy as the individual models, to within experimental error due to the stochasticity of the models.
+
+In this multi-model case, `scikit-learn' provided the best means for creating the 4 mutually exclusive classifiers from Random Forests, using it's OneVsRestClassifier.
 
 \subsection{Benchmarks}
 
@@ -180,11 +206,10 @@ A raw, bottom level benchmark for this investigation was a random classifier. Th
 
 $$x \sim Categorical(\mathbf{p}) \text{ where } \mathbf{p} = [0.25, 0.25, 0.25, 0.25]$$
 
-
-\subsection{Ablation Study \& Feature Evaluation }
-To investigate and evaluate the performance of certain features, an ablation study was performed on the each of the above categories.
-An ablation study was performed, by removing one feature at a time and testing the 5-fold cross validation score of the model in predicting these data. 
-The results are presented \textit{fig xyz}
+% \subsection{Ablation Study \& Feature Evaluation }
+% To investigate and evaluate the performance of certain features, an ablation study was performed on the each of the above categories.
+% An ablation study was performed, by removing one feature at a time and testing the 5-fold cross validation score of the model in predicting these data. 
+% The results are presented \textit{fig xyz}
 
 \section{Results}
 
@@ -199,7 +224,7 @@ For each model, grid search found the following hyperparameters provided the bes
 Categorical (Benchmark) & N.A. &  N.A.   \\
 % Logistic Regression & param1 & row1 \\
 % Logistic Regression & param2 & row1 \\
-Random Forests Classifier (MC) & estimators & 450 \\
+% Random Forests Classifier (MC) & estimators & 450 \\
 Random Forests Classifier (OvM)& estimators & 450 \\
 Adaboost Classifier & estimators & 200 \\
 Adaboost Classifier & learning rate & 0.25 \\\botrule
@@ -226,21 +251,16 @@ All models were evaluated on final held-out test set. Calculations were made of 
 \begin{table}[!h]
 \processtable{Hyperparameters of Models\label{Tab:hyperp}} {\begin{tabular}{@{}llll@{}}\toprule Model  & Cross Val Acc & Test Acc &F1 Score \\\midrule
 Categorical (Benchmark) & x & Test Acc &row1  \\
-Random Forests Classifier (MC) & y &  Test Acc &row2 \\
-Random Forests Classifier (OvM)& z &  Test Acc &row3 \\
+% Random Forests Classifier (MC) & y &  Test Acc &row2 \\
+Random Forests Classifier & z &  Test Acc &row3 \\
 Adaboost Classifier & w & row4 & row1\\\botrule
 \end{tabular}}{}
 \end{table}
 
-\subsection{Plots}
 
-Finally, to investigate the importance of various features, the ROC curve was plotted, for the best model, along with the confusion matrix, and the importance weights for the random forests classifier. These are presented \textit{here}.
+\subsection{Predictions}
 
-% A final model was produced that was able to achieve a classification score of 68.2\%.  The returning operator characteristic (ROC) curves were plotted for each predictor in the class and are shown in table \textit{blah}. The confusion matrix was also plotted for the test set, indicating where classifications were errornious. Finally the predictions for the unknown test scores are presented in table {XYZ}.
-
-\subsection{Final Predictions}
-
-Given the above evaluation of the models, a Random Forest Model was selected to give a predictions of \textbf{YYY} hitherto unclassified proteins. This prediction, along with per centage confidence scores, is given in table \textit{blah}
+Given the above evaluation of the models, a Random Forest Model was selected as our best model, on account of its $X$ score. As as result we used it to make predictions of \textbf{YYY} hitherto unclassified proteins. These prediction, along with per centage confidence scores, are given in table \textit{blah}.
 
 \begin{table}[!h]
 \processtable{Predictions of Test Proteins\label{Tab:02}} {\begin{tabular}{@{}lll@{}}\toprule Protein ID  & Subcellular Location & Probabilty \\\midrule
@@ -252,6 +272,13 @@ row4 & row4 & row4 \\\botrule
 \end{table}
 
 
+\subsection{Plots}
+
+Finally, to investigate the importance of various features, the ROC curve was plotted for the best model, Random Forests, along with the confusion matrix, and the importance weights for the random forests classifier. These are presented \textit{here}.
+
+% A final model was produced that was able to achieve a classification score of 68.2\%.  The returning operator characteristic (ROC) curves were plotted for each predictor in the class and are shown in table \textit{blah}. The confusion matrix was also plotted for the test set, indicating where classifications were errornious. Finally the predictions for the unknown test scores are presented in table {XYZ}.
+
+
 \section{Discussion}
 
 \subsection{Classifier Comparison}
@@ -261,7 +288,7 @@ The woeful performance of $X$ accuracy is to be expected for a model that doesn'
 
 It is also clear that Random Forests outperforms AdaBoost, securing a decisive performance improvement of $X$ compared to $Y$. In both cases this \textit{who got more false positives, false negatives}.
 
-This performance difference is likely down to\textit {critique of bagging vs boosting}. 
+This performance difference is likely down to the difficulty that \textit{boosting} methods have in dealing with high variance datasets.. 
 \begin{figure}[!h]
 \includegraphics[width=8cm]{confusion}
 \centering
@@ -281,7 +308,7 @@ This misclassification is made all the more evident by looking at the Returning 
 From these graphs, it is immediately clear that the best classifier is the secreted class, with the area under curve (AUC) of 0.98, followed by the mitochondrial class of 0.93. The worst performer is the cytosolic class (0.79) followed by the nuclear class (0.83).
 
 There are a number of reasons why it is conceivable that these particular protein classifiers (cytosolic and nuclear) should perform worse than the other two categories (secreted and mitochondrial). 
-For one thing, there are a number of proteins that frequently move between the nucleus and the cytoplasm, meaning that they may posses both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}. 
+For one thing, there are a number of proteins that frequently move between the nucleus and the cytosol, meaning that they may posses both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}. 
 This mixup of very distinct features (in the form of target peptides) would likely lead the classifiers to struggle to distinguish the correct class in ambiguous cases.
 
 Furthermore, it is likely that mitochondrial proteins and secreted proteins may have important properties that are unrelated to target peptides but still show up in our choice of features. For instance, since secreted proteins need to cross the cell membrane, it is possible features such as very large size or certain peptide make up, might make this action difficult. There may exist alternative restrictions on mitochondrial proteins, that need to be adapted to help in respiration, which might also restrict the protein's structure.
@@ -328,11 +355,21 @@ Finally it is worth noting that none of the most important features correspond t
 
 Although this model performed well in distinguishing the secreted and mitochondrial proteins there are a number of additional features that may particularly improve future implementations of this model. 
 
-First, some measure of hydrophobicity would be a valuable additional feature. This wasn't added due to the lack of there being an available scale in the BioPython module, but it is likely this addition would help to pick up the hydrophobicity of of elements found in \textit{either NLS or NES sections of the sequence}, helping to distiguish nuclear and cytoplasmic proteins.
+First, some measure of hydrophobicity would be a valuable additional feature. 
+As mentioned in section 2, often the hydrophobic characteristic of signal peptides is what is detected by receptors, but this model only captures these features indirectly, through looking at frequencies of individual amino acids.
+A specific feature for hydrophobicity wasn't added due to the lack of there being an available hydrophobicity scale in the BioPython module, but it is likely some measure of this  (both over the whole molucule and just the N terminus), would be of some value.
 
-Furthermore it should be worth exploring and searching for specific target patterns within the model. I attempted to search for these by creating a feature for all possible "bigrams" and "trigrams" of residues, and looking at importances, but the high dimensionality made learning difficult. Instead, if one had specific examples of known target peptides this feature would likely greatly help classification, without adding too much to computational complexity.
+Secondly, it might be worth exploring and searching for specific target patterns within the model. 
+In exploring potential features, I attempted to search for these by creating a feature for all possible "bigrams" and "trigrams" of residues, and examining importances after training, but the high dimensionality made learning difficult and slow. 
+Instead, if one had specific examples of known target peptides this feature would likely greatly help classification, without adding too much to computational complexity.
+A drawback would be that these examples may be very incomplete, as many signals are still unknown, so there may be a limited benefit.
 
-Finally it may be worth trying gradient boosting algorithms or neural networks. Gradient boostin algorithms such as XGBoost \textit{Explain why gradient boosting maybe better 2 lines}. Neural networks also have significant performance, but mainly on high data sets. Given the relatively small dataset (only a few \textit{thousand points}), neural methods may not be suited to this particular small task.
+Finally it may be worth exploring the use of neural networks, as classifiers.
+Neural networks have shown significant promise in various fields in bioinformatics including protein function prediction \textbf{Jones et al}, and could theoretically be applied to this problem. 
+In this case, one could use a richer set of features and feed through a multiclass deep fully connected neural network, or even augment the sequence data with features and the feed augmented sequence into recurrent neural network, such as an LSTM. 
+This latter architecture might have the advantage of allowing investigators to detect new target peptides, through spotting sequences that radically increase likelihoods of a certain classification.
+However, a draw back is that these neural methods often require a great deal of data, and the dataset here is relatively small so a neural model may not generalise well.
+This method should be considered, if more training sequence is avaliable.
 
 \section{Conclusions}
 
@@ -439,31 +476,16 @@ Text Text Text  Text Text.  \citep{Bag01} wants to know about
 \section{Approach}
 
 Equation~(\ref{eq:01}) Text Text Text Text Text Text  Text Text
-Text Text Text Text Text Text Text Text Text Text Text Text Text.
+TextText.
 Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
 Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
 .....
 
 
 \begin{methods}
 \section{Methods}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text
+  .
+Figure~2\vphantom{\ref{fig:02}} shows that the above method   .
 text\vspace*{1pt}
 
 \begin{itemize}
@@ -471,295 +493,12 @@ text\vspace*{1pt}
 \item for bulleted list, use itemize
 \item for bulleted list, use itemize\vspace*{1pt}
 \end{itemize}
+  .
+Figure~2\vphantom{\ref{fig:02}} shows that the above method   .
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method Text
-Text Text Text Text Text Text Text Text Text Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text\vadjust{\newpage}.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method Text
-Text Text Text Text Text Text Text Text Text Text Text.
-\citealp{Boffelli03} might want to know about text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text Text.
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-
-\subsection{This is subheading}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text
-text. Text Text Text Text Text Text  Text Text Text Text Text Text
-Text Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-
-
-\subsubsection{This is subsubheading}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text\break
-text text
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text
-textText Text Text Text Text Text  Text Text Text Text Text Text
-Text Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
 
 \enlargethispage{6pt}
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
+Text Text  Text Text.
 
 \begin{table}[!t]
 \processtable{This is table caption\label{Tab:01}} {\begin{tabular}{@{}llll@{}}\toprule head1 &
@@ -786,70 +525,6 @@ row4 & row4 & row4 & row4\\\botrule
 %\caption{Caption, caption.}\label{fig:02}
 %\end{figure}
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-\subsection{Test1}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
-
-
-
-
-\section{Discussion}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text.
-
-
-
-
-Table~\ref{Tab:01} shows that Text Text Text Text Text  Text Text
-Text Text Text Text. Figure~2\vphantom{\ref{fig:02}} shows that
-the above method Text Text. Text Text Text  Text Text Text Text
-Text Text. Figure~2\vphantom{\ref{fig:02}} shows that the above
-method Text Text. Text Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method Text
-Text.
-
 
 
 
@@ -869,48 +544,18 @@ Text.
 
 
 
-
-\section{Conclusion}
-
-(Table~\ref{Tab:01}) Text Text Text Text Text Text  Text Text Text
-Text Text Text Text Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about  text text text text
-
 \begin{enumerate}
 \item this is item, use enumerate
 \item this is item, use enumerate
 \item this is item, use enumerate
 \end{enumerate}
 
-Text Text Text Text Text Text Text Text Text Text Text Text Text
+
 Text Text Text Text Text Text Text Text.
 Figure~2\vphantom{\ref{fig:02}} shows\vadjust{\pagebreak} that the
-above method  Text Text Text Text Text Text Text Text Text Text
-Text Text.  \citealp{Boffelli03} might want to know about text
-text text text Text Text Text Text Text Text  Text Text Text Text
-Text Text Text Text Text Text Text Text Text Text Text.
+ Text Text Text Text Text Text  Text Text Text Text
 Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
 Text Text Text Text Text Text Text Text Text  Text Text.
-\citealp{Boffelli03} might want to know about text text text text
 Text Text Text Text Text Text  Text Text Text Text Text Text Text
 Text Text Text Text Text Text Text\break Text.
 
@@ -923,12 +568,6 @@ Text Text Text\vspace*{-10pt}
 
 \section*{Acknowledgements}
 
-Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text
-text text text\vspace*{-12pt}
-
-\section*{Funding}
-
-This work has been supported by the... Text Text  Text Text.\vspace*{-12pt}
 
 %\bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
@@ -942,6 +581,13 @@ This work has been supported by the... Text Text  Text Text.\vspace*{-12pt}
 
 
 \begin{thebibliography}{}
+
+\bibitem[Alberts, \textit{et~al}. (2008)]{Alb00}
+Alberts, \textit{et~al}. (2008) Molecular Biology of the Cell
+(5th ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
+???--???.
+
+
 
 \bibitem[Bofelli {\it et~al}., 2000]{Boffelli03}
 Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
@@ -963,7 +609,7 @@ Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
 cancer management: one tumor, one chip. \textit{Bioinformatics},
 doi:10.1093/bioinformatics/btn000.
 
-\bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
+\bibitem[Alberts, \textit{et~al}. (2000)]{Aut00}
 Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
 (ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
 ???--???.

@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1521680911 "main.tex" "main.pdf" "main" 1521680912
+["pdflatex"] 1521747599 "main.tex" "main.pdf" "main" 1521747600
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc" 1480098668 6938 5135be6a8802f13a7faf296d1959a1ab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/ly1/phvb8y.tfm" 1480098688 4676 6115e86a5717ebd14d3380f482c7b416 ""
@@ -107,8 +107,8 @@
   "cyto_import.png" 1521661282 17982 07e90e43da7907adc4f8ab43a5237002 ""
   "flushend.sty" 1448452186 5110 4612226a520e954eb087fba78e1a0a02 ""
   "graphicx.sty" 1448452186 7880 e5b92297fb192340acd8794d6a22b953 ""
-  "main.aux" 1521680912 5484 bab1f62b45e9bf6fcdb5f4b0433065f4 ""
-  "main.tex" 1521680909 51934 8ed1ca4b13a86a9d6c1caf0c2283bdf5 ""
+  "main.aux" 1521747599 3594 575b93e49c51553c9d05ea912ec88079 ""
+  "main.tex" 1521747598 35243 fdf0b384e617fdf3fe88762123a45406 ""
   "mito_import.png" 1521661277 19064 2327b55f3c382ef43793f17cdd1a7fe2 ""
   "natbib.sty" 1448452186 34226 b58b1fa5f3ade89cdf17cb61154dea2e ""
   "nucleus_import.png" 1521661271 18321 6871a0c54e0053381b6d2d7f17659142 ""
