@@ -211,7 +211,7 @@ INPUT secreted_import.png
 INPUT ./secreted_import.png
 INPUT ./secreted_import.png
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/ly1/ptmri8y.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/ly1/ptmb8y.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/ly1/ptmr8y.tfm
 INPUT main.aux
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb

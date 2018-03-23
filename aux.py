@@ -14,6 +14,11 @@ def load_files():
             data.extend(filedata)
     return data
 
+def load_test():
+    with open("data/blind.fasta") as f:
+        filedata = [(values, -1) for values in FastaIterator(f)]
+    return filedata
+
 def train_validate_split(split, data):
     '''1. Shuffle data, then split it according to fraction in split'''
     np.random.shuffle(data) # in place
