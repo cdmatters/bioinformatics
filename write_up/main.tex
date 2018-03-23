@@ -25,7 +25,7 @@ Predicting subcellular localization from raw sequence data is a important resear
 This paper presents a comparison of two machine learning classifiers to do this: Random Forests and AdaBoost.
 Using features derived from the sequence, these were trained to classify non homologuous protein sequences into four localizations: cytosolic, nuclear, secretory, mitochondrial.
 These models were compared to each other and a baseline, and the best was chosen to predict localizations for X unknown proteins. \\
-\textbf{Results:} The Random Forest classifier performed best in the comparison, with a test accuracy of 67.5\%, and F1 score of 68.3\% . This outperformed AdaBoost's 64.4\%  test accuracy and 62.6\% F1. Both beat the benchmark significantly, and the Random Forest model was chosen to make the final predictions.\\
+\textbf{Results:} The Random Forest classifier performed best in the comparison, with a test accuracy of 67.5\%, and F1 score of 68.3\% . This outperformed AdaBoost's 64.4\%  test accuracy and F1 of 62.6\%. Both beat the benchmark significantly, and the Random Forest model was chosen to make the final predictions.\\
 % \textbf{Availability:} Text  Text Text Text Text
 \textbf{Contact:} \href{eric.hambro.17@ucl.ac.uk}{eric.hambro.17@ucl.ac.uk}
 }
@@ -348,7 +348,7 @@ This performance difference is likely down to the difficulty that \textit{boosti
 \label{fig:import1}
 \end{figure}
 
-
+\subsection{Error Analysis}
 
 Although both the feature-based models performed to different levels on the test set, it is striking that both models found the same classifications difficult. 
 Both models' F1 scores for classes run from lowest to highest in the same order: cytosolic, nuclear, mitochondrial, secreted.
@@ -385,7 +385,7 @@ For instance There may exist restrictions on mitochondrial proteins, that need t
 \label{fig:import2}
 \centering
 \end{figure}
-\subsection{Error Analysis}
+
 
 \subsection{Features Analysis}
 
