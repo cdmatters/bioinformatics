@@ -12,20 +12,21 @@
 
 \title[short Title]{Predicting Protein Subcellular Localization from Sequence Data}
 \author[Sample \textit{et~al}.]{Eric Hambro\,$^{\text{\sfb 1,}*}$}
-\address{$^{\text{\sf 1}}$Department, Institution, City, Post Code, Country}
+\address{$^{\text{\sf 1}}$eric.hambro.17@ucl.ac.uk, SN: 17096751, Machine Learning MSc, UCL }
 
-\corresp{$^\ast$To whom correspondence should be addressed.}
+\corresp{}%$^\ast$To whom correspondence should be addressed.}
 
 \history{ }
 
 \editor{ }
 
 \abstract{\textbf{Motivation:}  
-Deriving protein function from sequence level data can provide.  Using features derived from the sequence and a random forests model was trained to classify protein sequences according to their location of use. Using a validation set of blah, an accuracy prediction accuracy of blah was reported, along with an F1 score of blah.\\
-\textbf{Results:} Lorem ipsum Text  Text Text Text Text Text
-  Text Text Text Text Text Text\\
-\textbf{Availability:} Text  Text Text Text Text
-  Text\\
+Predicting subcellular localization from raw sequence data is a important research problem, with applications in drug discovery and medecine research. 
+This paper presents a comparison of two machine learning classifiers to do this: Random Forests and AdaBoost.
+Using features derived from the sequence, these were trained to classify non homologuous protein sequences into four localizations: cytosolic, nuclear, secretory, mitochondrial.
+These models were compared to each other and a baseline, and the best was chosen to predict localizations for X unknown proteins. \\
+\textbf{Results:} The Random Forest classifier performed best in the comparison, with a test accuracy of 67.5\%, and F1 score of 68.3\% . This outperformed AdaBoost's 64.4\%  test accuracy and 62.6\% F1. Both beat the benchmark significantly, and the Random Forest model was chosen to make the final predictions.\\
+% \textbf{Availability:} Text  Text Text Text Text
 \textbf{Contact:} \href{eric.hambro.17@ucl.ac.uk}{eric.hambro.17@ucl.ac.uk}
 }
 
@@ -34,36 +35,34 @@ Deriving protein function from sequence level data can provide.  Using features 
 
 %% TODO 
 % * Introduction & fill in with experiments
-% * Subcellular Localization & transport citations
-% * Bagging & Boosting Theoretical Background
-% * Remove Multiclass Random Forest
-% * Results in Tables for categorical, train valid test accuracy
-% * Results in tables for test f1, test acc, test rocauc
-% * Ablation Study??
 % * Prediction of Proteins
 % * Normalise CM
 % * Error Bars on RocAuc
+% * Refeences to pictures
 % * Bagging Boosting Compare models
-% * Further Work
 % * Conclusion
 % * Abstract
 \section{Introduction}
 
+Discovering subcellular localization of proteins is a vital piece of information in many applied fields in cell biology. 
+Not only is it important to help discover and catalogue the complex chemical pathways and signals that occur inside the cell, but it has vital medical applications, in particular in drug discovery and delivery. Furthermore, in cases where no homology is evident for a gene, subcellular localization of the protein can be used an indicator of the potential function of that protein - a vital clue in the right direction.
+
+Since as early as \textbf{blah}, machine learning has been used to help predict automatically the subcellular localization of a protein, in an attempt to reduce the cost and time taken to process a protein sequences.  
+Traditional methods of determining subcellular location, such as tagging proteins with immunofluorescence, were laborious and time intensive, and have been unable to keep up with the rapidly proliferating amount of genetic and protein sequence data. 
+Using automated machine learning techniques, bioinformaticians have been able to make predictions at a high degree of confidence with only sequence data. One of the first of these models was \textit{cite and a sentence how it worked}, although today common methods include \textit{methods, cite 1}  and \textit{methods, cite 2}.
+
+% Although sequence data of genes has proliferated since the advent of \textbf{technique}, the classification of protein function has lagged behind significantly.  \textbf{Statistic}. 
+% This is partly down to the fact that protein function is a complex labelling task, given the function of proteins may vary under different conditions.  
+% In cases where no homologues are present for a gene, knowing the subcellular location of the the protein gives indicator as to the proteins function. 
+% Furthermore discovering subcellular location has proven to be vital information in the research of new drugs and vaccinations. 
+% As such, automated means of predicting subcelular localization are utmost urgency in todays drug search enbironment.
 
 
-Although sequence data of genes has proliferated since the advent of \textbf{technique}, the classification of protein function has lagged behind significantly.  \textbf{Statistic}. 
-This is partly down to the fact that protein function is a complex labelling task, given the function of proteins may vary under different conditions.  
-In cases where no homologues are present for a gene, knowing the subcellular location of the the protein gives indicator as to the proteins function. 
-Furthermore discovering subcellular location has proven to be vital information in the research of new drugs and vaccinations. 
-As such, automated means of predicting subcelular localization are utmost urgency in todays drug search enbironment.
+In this particular experiment we are presented with a labeled data set of 9222 proteins and we will try to predict and evaluate both a Random Forests model and AdaBoost model on these data, comparing both to a baseline random model.
+The proteins themselves each correspond to one of four subcellular localizations - cytosolic, secretory, nuclear or mitochondrial - and after training the models, we make predictions of locations for \textit{X} unknown proteins in these classes, before analysing our own test errors and models. 
 
-Since as early as \textbf{blah}, machine learning has been used to predict automatically the subcellular localization of a protein, in an attempt to reduce the cost and time taken to process the proliferating protein sequences.   Traditional methods such as \textbf{experiment}, which were laborious and time intensive, have been replaced in parts by \text{papers}, which are able to make predictions at a high degree of confidence \textit{reference} with only sequence data.
+Section 2 of this paper contains a brief background of biological and machine learning elements used in the experiment, whereas Sections 3 and 4 presents the methods and results of the experiments. In Section 5 a discussion of the results is presented, along with a comparison of the models, their features, and analysis of the errors. A short conclusion is presented in Section 6.
 
-Some these techniques include \textbf{machine learning technique}, which does a \textbf{xyz}, and \textbf{ml technique 2} which does \textbf{this}. 
-
-In this particular experiment we are presented with a training data set \textit{X} proteins, each corresponding to one of four subcellular locations, and we train and evaluated a Random Forests classifier on these data, finally making predictions of locations for \textit{X} unknown proteins.  
-
-Section 2 of this report contains a description of the method used, and Section 3 presents our results. A discussion of these results is then presented in Section 4, along with analyses of the features of the model, a comparison to another model, and our motivation in choosing this method.  Finally, I present a comparison with existing work in the field and further work that could be done, ending with a conclusion.
 %Para 1: What is it & why is it important?
 %Para 2: What are applications?
 %Para 3: What is the history?
@@ -145,10 +144,9 @@ These learners are then weighted by their error, to provide the overall classifi
 \section{Method}
 
 \begin{table}[!t]
-\processtable{Sample Data Set By Protein Class\label{Tab:RawData}} {\begin{tabular}{@{}llll@{}}\toprule Cytosolic &
-Nucleic & Secreted & Mitochondrial\\\midrule
-row4 & row4 & row4 & row4\\\botrule
-\end{tabular}}{}
+\processtable{Experimental Data Set By Class\label{Tab:RawData}} {\begin{tabular}{@{}llll@{}}\toprule Cytosolic &Mitochondrial &Nucleic & Secreted  \\\midrule
+3004 & 1299 & 3314 & 1605\\\botrule
+\end{tabular}}{The total available labeled data used in this experiment.}
 \end{table}
 
 \subsection{Preprocessing}
@@ -157,7 +155,7 @@ Data was obtained from four files containing protein sequences in Fasta format.
 Each file contained proteins according to its type of subcellular localization: cytosolic, secreted, nuclear and mitochondrial. 
 The number of proteins in each file is presented in Table \ref{Tab:RawData}. 
 These data files contained no homologues, and therefore could be assimilated, shuffled and split into a training and validation set randomly. 
-The data was then split into a test set that would be held out for final evalution (10\%), and a train and validation set (90\%) that could be used to tune hyperparameters. 
+The data was then split into a test set that would be held out for final evalution (20\%), and a train and validation set (80\%) that could be used to tune hyperparameters. 
 %\textbf{This was done, and a training-validation split of 70\%-30\% was set.}
 
 The data was then fed through a pipeline to extract a number of features from the sequence.
@@ -165,7 +163,8 @@ These features all corresponded to floating point numbers, and so were concatena
 
 \subsection{Features}
 
-The open source `BioPython` \textit{reference} module was used to extract features from the sequence data, allowing us to augment raw residue sequence data with important characteristics of the amino acids, such as isoelectronic point or molecular weight. In total 75 features were created, although many of these could be grouped into the same category. These features were:
+The open source `BioPython` module was used to extract features from the sequence data, allowing us to augment raw residue sequence data with important characteristics of the amino acids, such as isoelectronic point or molecular weight. 
+In total 75 features were created, although many of these could be grouped into the same category. These features were:
 
 \begin{itemize}
 
@@ -180,31 +179,36 @@ The open source `BioPython` \textit{reference} module was used to extract featur
 
 \end{itemize}
 
-These features were chosen as they had a high impact on the on the remaining the accuracy of the classifier. The importance of each of these features to various classifications is examined in section 4.  
+These features were chosen as they had a high impact on the on the remaining the accuracy of the classifier. 
+The importance of each of these features to various classifications is examined in section 4.  
 
 
 \subsection{Classifier Training \& Tuning}
 
-A number of classifiers were trained to investigate the best possible model in predicting the subcellular location. These models were:
+Three classifiers were trained to investigate the best possible model in predicting the subcellular location. These models were:
 
 \begin{itemize}
-  \item {Categorical Distribution}
-  % \item {Random Forests Classifier - MultiClass}
-  \item {Random Forests Classifier - One-Vs-Rest (4 Models)}
+  \item {Categorical Distribution Classifier (Benchmark)}
+  \item {Random Forests Classifier}
   \item {Adaboost Classifier}
 \end{itemize}
 
-All classifiers were implemented using the open source `scikit-learn` package. In all cases, model parameters were fit with a 5-fold cross validation, on the train and validate set mentioned previously. Hyperparameters were tuned using a grid search \textbf{plot}, and chosing the parameters that had the best 5-fold cross validation score of accuracy. 
+All classifiers were implemented using the open source `scikit-learn` package. In all cases, model parameters were fit with a 5-fold cross validation, on the train and validate set mentioned previously. 
+Hyperparameters were tuned using a grid search, and chosing the parameters that had the best 5-fold cross validation score of accuracy. 
+The best of these 5-fold models was then taken for each classifier, and was tested on the held out test set, evaluating both the overall accuracy, and the precision and recall of individual categories.
 
-In the Random Forests Model, multiple models were trained, each solely to predict one class. Although this is strictly unnecesssary for a Random Forests Classifier, it provides the additional advantage of allowing for interpretable feature importances, and more interpretable analysis of the individual clusters. A single multi class Random Forests Model was also implemented, though this was found to have the same accuracy as the individual models, to within experimental error due to the stochasticity of the models.
-
-In this multi-model case, `scikit-learn' provided the best means for creating the 4 mutually exclusive classifiers from Random Forests, using it's OneVsRestClassifier.
+It is worth noting that in the Random Forests Model, multiple models were trained, each solely to predict one class, instead of a single multi-class classifier. 
+Although this is strictly unnecesssary for a Random Forests Classifier, it provides the additional advantage of allowing for interpretable feature importances, and more interpretable analysis of the individual class classifiers. 
+To ensure a fair analysis of the classifier, a single multi-class Random Forests Model was also implemented, though this was found to have the same accuracy as the individual models, to within experimental error.
+In this multi-model case, `scikit-learn' provided the best means for creating the 4 mutually exclusive classifiers from Random Forests, using it's One-Vs-Rest Classifier wrapper.
 
 \subsection{Benchmarks}
 
-A raw, bottom level benchmark for this investigation was a random classifier. This classifer was simply an implementation of a categorical distribution, with the probability vector learnt from the frequency of each category in the training dataset.
+A raw, bottom level benchmark for this investigation was a random classifier, here referred to as the Categorical Classifier. 
+This classifer is so called because it simply predicted categories for data points following a simple categorical distribution, with the probability vector $\mathbf{p}$ learnt from the calculating frequency of each class in it's training set.
+This model was implemented by hand, using the inheritance properties of `scikit-learns' BaseEstimator class, to allow easy integration into the scikit-learn pipeline.
 
-$$x \sim Categorical(\mathbf{p}) \text{ where } \mathbf{p} = [0.25, 0.25, 0.25, 0.25]$$
+% $$x \sim Categorical(\mathbf{p}) \text{ where } \mathbf{p} = [0.25, 0.25, 0.25, 0.25]$$
 
 % \subsection{Ablation Study \& Feature Evaluation }
 % To investigate and evaluate the performance of certain features, an ablation study was performed on the each of the above categories.
@@ -213,11 +217,8 @@ $$x \sim Categorical(\mathbf{p}) \text{ where } \mathbf{p} = [0.25, 0.25, 0.25, 
 
 \section{Results}
 
-\subsection{Final Hyperparameter}
-For each model, grid search found the following hyperparameters provided the best test cross validation score.
-
-\textbf{table hyper params }
-
+\subsection{Final Hyperparameters}
+Table \ref{Tab:hyperp} shows results of the hyperparameter grid search for each of the models, presenting the best hyperparameters according to the mean cross-validation accuracy. These hyperparameters were the ones used for all following data analysis.
 
 \begin{table}[!h]
 \processtable{Hyperparameters of Model\label{Tab:hyperp}} {\begin{tabular}{@{}lll@{}}\toprule Model  & Hyperparameter & Settings \\\midrule
@@ -225,9 +226,9 @@ Categorical (Benchmark) & N.A. &  N.A.   \\
 % Logistic Regression & param1 & row1 \\
 % Logistic Regression & param2 & row1 \\
 % Random Forests Classifier (MC) & estimators & 450 \\
-Random Forests Classifier (OvM)& estimators & 450 \\
-Adaboost Classifier & estimators & 200 \\
-Adaboost Classifier & learning rate & 0.25 \\\botrule
+Random Forests Classifier & estimators & $450$ \\
+Adaboost Classifier & estimators & $200$ \\
+                    & learning rate & $0.25$ \\\botrule
 \end{tabular}}{}
 \end{table}
 
@@ -245,36 +246,68 @@ Adaboost Classifier & learning rate & 0.25 \\\botrule
 
 
 \subsection{Model Scores}
-
-All models were evaluated on final held-out test set. Calculations were made of the accuracy, the F1 score and Area Under Curve of the Returning Operator Characteristic (AUCROC)
+With the hyperparameters selected and 5-fold cross-validation performed, the most accurate models from the cross-validation were chosen as "final models", and evaluated on the held out test data-set. 
+Table \ref{Tab:acc} shows both the results of the cross-validation accuracy (both train and validation), and the accuracy and F1 score of the best model on the held out test set.
+Further interrogation of these models in then presented in Table \ref{Tab:metr}, where the precision, recall and F1 score of each of the classes for each model is presented.
 
 \begin{table}[!h]
-\processtable{Hyperparameters of Models\label{Tab:hyperp}} {\begin{tabular}{@{}llll@{}}\toprule Model  & Cross Val Acc & Test Acc &F1 Score \\\midrule
-Categorical (Benchmark) & x & Test Acc &row1  \\
+\processtable{Accuracy of Models\label{Tab:acc}} {\begin{tabular}{@{}lllll@{}}\toprule Model  & CV Train Acc & CV Valid Acc  & Test Acc & Test F1 \\\midrule
+Categorical (Benchmark) & $0.283 \pm 0.004$ & $0.291 \pm 0.011$ & $0.277$ & $0.273$ \\
 % Random Forests Classifier (MC) & y &  Test Acc &row2 \\
-Random Forests Classifier & z &  Test Acc &row3 \\
-Adaboost Classifier & w & row4 & row1\\\botrule
+Random Forests  &  $1.00 \pm 0.000$  &  $0.682 \pm 0.005$ & $0.675$ & $0.683$\\
+AdaBoost  & $0.650 \pm 0.003$ & $0.634 \pm 0.013$ & $0.643$ & $0.626$\\\botrule
 \end{tabular}}{}
 \end{table}
 
+\begin{table}[!h]
+\processtable{Classification Metrics\label{Tab:metr}} {\begin{tabular}{@{}llllll@{}}\toprule  Model & Class & Precision  & Accuracy & F1 & Support\\\midrule
+Categorical  & Cyto & $0.326$ & $0.333$ & $0.329$ & $604$ \\
+        & Mito & $0.144$ & $0.140$ & $0.142$ & $271$ \\
+        & Nucl & $0.363$ & $0.363$ & $0.363$ & $653$ \\
+        & Secr & $0.210$ & $0.206$ & $0.208$ & $316$ \\
+\midrule
+Random Forests & Cyto & $0.602$ & $0.556$ & $0.578$ & $604$ \\
+        & Mito & $0.804$ & $0.668$ & $0.730$ & $271$ \\
+        & Nucl & $0.639$ & $0.714$ & $0.674$ & $653$ \\
+        & Secr & $0.837$ & $0.880$ & $0.858$ & $316$ \\
+\midrule
+AdaBoost & Cyto & $0.506$ & $0.495$ & $0.500$ & $604$ \\
+        & Mito & $0.694$ & $0.661$ & $0.677$ & $271$ \\
+        & Nucl & $0.589$ & $0.640$ & $0.613$ & $653$ \\
+        & Secr & $0.895$ & $0.807$ & $0.849$ & $316$ \\\botrule
+
+\end{tabular}}{Metrics calculated on test set, using best trained model}
+\end{table}
+
+From these tables it is clear that not only did the Random Forests Model perform best overall but it also performed best in every single individual class. AdaBoost performed only slightly worse in accuracy, $0.643$ compared to Random Forests $0.675$, although it performed worse under the F1 metric ($0.626$ compared to $0.683$), where the F1 metric was an average of class F1s, weighted by the number of classes present in the test set. Both models significantly outperformed the categorical benchmark, with its accuracy of $0.277$.
+
+Furthermore in all cases, the test set accuracies were very close to the mean cross-validation accuracies, which themselves had low variance. This indicates little overfitting of the hyperparameter choice to the validation set - as desired.
 
 \subsection{Predictions}
 
-Given the above evaluation of the models, a Random Forest Model was selected as our best model, on account of its $X$ score. As as result we used it to make predictions of \textbf{YYY} hitherto unclassified proteins. These prediction, along with per centage confidence scores, are given in table \textit{blah}.
+Since the Random Forest Model was selected as our best model, it was subsequently used to to make predictions of \textbf{YYY} hitherto unclassified proteins. These prediction, along with percentage confidence scores, are given in Table \ref{Tab:predict}.
 
 \begin{table}[!h]
-\processtable{Predictions of Test Proteins\label{Tab:02}} {\begin{tabular}{@{}lll@{}}\toprule Protein ID  & Subcellular Location & Probabilty \\\midrule
-row1 & row1 & row1 \\
-row2 & row2 & row2 \\
-row3 & row3 & row3 \\
-row4 & row4 & row4 \\\botrule
-\end{tabular}}{This is a footnote}
+\processtable{Predictions of Test Proteins\label{Tab:predict}} {\begin{tabular}{@{}lll|lll@{}}\toprule Protein ID  &  Location & Probabilty & Protein ID  &  Location & Probabilty\\\midrule
+SEQ677 & Cyto & 0.416  & SEQ608 & Cyto & 0.472  \\
+SEQ231 & Cyto & 0.307  & SEQ402 & Mito & 0.628  \\
+SEQ871 & Nucleus & 0.381  & SEQ433 & Secreted & 0.804  \\
+SEQ388 & Cyto & 0.360  & SEQ821 & Secreted & 0.795  \\
+SEQ122 & Cyto & 0.430  & SEQ322 & Nucleus & 0.680  \\
+SEQ758 & Nucleus & 0.560  & SEQ982 & Nucleus & 0.813  \\
+SEQ333 & Cyto & 0.494  & SEQ951 & Nucleus & 0.483  \\
+SEQ937 & Cyto & 0.686  & SEQ173 & Cyto & 0.495  \\
+SEQ351 & Cyto & 0.517  & SEQ862 & Mito & 0.662  \\
+SEQ202 & Mito & 0.694  & SEQ224 & Cyto & 0.381  \\\botrule
+\end{tabular}}{Predictions made with Random Forest model}
 \end{table}
 
 
 \subsection{Plots}
 
-Finally, to investigate the importance of various features, the ROC curve was plotted for the best model, Random Forests, along with the confusion matrix, and the importance weights for the random forests classifier. These are presented \textit{here}.
+Finally, to investigate the importance of various features, the ROC curves were plotted for our Random Forests model  (Figure \ref{fig:roc}), along with the confusion matrix for its classifications (Figure \ref{fig:confusion}). 
+Furthermore the top 25 importance weights of the individual classifiers were also plotted, to aid in this investigation. 
+These are presented in Figures \ref{fig:import1} \&  \ref{fig:import2} .
 
 % A final model was produced that was able to achieve a classification score of 68.2\%.  The returning operator characteristic (ROC) curves were plotted for each predictor in the class and are shown in table \textit{blah}. The confusion matrix was also plotted for the test set, indicating where classifications were errornious. Finally the predictions for the unknown test scores are presented in table {XYZ}.
 
@@ -283,37 +316,58 @@ Finally, to investigate the importance of various features, the ROC curve was pl
 
 \subsection{Classifier Comparison}
 
-From the above results it is quite clear that both boosting and bagging methods far outperformed the benchmark method. 
-The woeful performance of $X$ accuracy is to be expected for a model that doesn't take into account any of the sequence data, or underlying features. 
+It is unsurprising that that both boosting and bagging methods far outperformed the benchmark method. 
+The woeful performance of $0.277$ accuracy is to be expected for a model that doesn't take into account any of the sequence data, or underlying features. 
+However, the significant discrepancy between Random Forests and AdaBoost is more difficult to explain, and probably comes down to the high variance nature of the underlying data. 
+In general, boosting methods struggle on very noisy data, as in the best cases bagging acts to reduce variance, whereas bagging tends to reduce bias. 
+It is interesting to note that the AdaBoost classifier only really approached Random Forest performance in the case of the Secreted label (RF $0.858$ vs Ada $0.849$), which is probably the class with the least `noise', or strongest `signal', judging by the strength of the leading feature importances.
 
-It is also clear that Random Forests outperforms AdaBoost, securing a decisive performance improvement of $X$ compared to $Y$. In both cases this \textit{who got more false positives, false negatives}.
+\begin{figure}[!h]
+\includegraphics[width=8cm]{roc_curve}
+\caption{Returning Operator Characteristic (ROC) curves for each classifier in Random Forests }
+\label{fig:roc}
+\centering
+\end{figure}
 
 This performance difference is likely down to the difficulty that \textit{boosting} methods have in dealing with high variance datasets.. 
 \begin{figure}[!h]
 \includegraphics[width=8cm]{confusion}
+\caption{Confusion Matrix for Random Forest Classifier}
+\label{fig:confusion}
 \centering
 \end{figure}
 
-\begin{figure}[!h]
-\includegraphics[width=8cm]{roc_curve}
+\begin{figure}[t]
+\includegraphics[width=8cm]{cyto_import}
 \centering
+% \end{figure}\begin{figure}[h]
+\includegraphics[width=8cm]{mito_import}
+\centering
+% \end{figure}\begin{figure}[h]
+\caption{Top 25 Feature Importances for Cytosol and Mitochondrial classes in Random Forests Classifier}
+\label{fig:import1}
 \end{figure}
 
-\subsection{Error Analysis}
 
-In inspecting our best performing model, Random Forests, more closely, it is clear that the errors in the model were not distributed evenly across categories.
-Instead it appears that the greatest source error in fact come from misclassifying nuclear labels for cytosolic ones. This can be seen clearly from the confusion matrix presented in \textit{confusion matrix}. Almost $X\%$ of nuclear proteins are misclassified as cytosolic, and $Y\%$ as cytosolic as nuclear.
+
+Although both the feature-based models performed to different levels on the test set, it is striking that both models found the same classifications difficult. 
+Both models' F1 scores for classes run from lowest to highest in the same order: cytosolic, nuclear, mitochondrial, secreted.
+This seems to suggest an underlying challenge with distinguishing these former classes, either due to true biological similarity, or simply lack of features.
+
+This is also supported by examining the confusion matrix for the Random Forests classifier (Figure \ref{fig:confusion}).
+It appears that the greatest single sources of error come from misclassifying nuclear labels for cytosolic ones, and vice versa. Almost $25\%$ of nuclear proteins are misclassified as cytosolic, and $36\%$ as cytosolic as nuclear.
 
 This misclassification is made all the more evident by looking at the Returning Order Characteristic (ROC) curves, where all the classifiers are plotted together. 
-From these graphs, it is immediately clear that the best classifier is the secreted class, with the area under curve (AUC) of 0.98, followed by the mitochondrial class of 0.93. The worst performer is the cytosolic class (0.79) followed by the nuclear class (0.83).
+From these graphs, it is immediately clear that the best classifier is the secreted class, with the area under curve (AUC) of 0.98, followed by the mitochondrial class of 0.93. The worst performer is the cytosolic class (0.80) followed by the nuclear class (0.84), as also visible from the curves.
 
-There are a number of reasons why it is conceivable that these particular protein classifiers (cytosolic and nuclear) should perform worse than the other two categories (secreted and mitochondrial). 
-For one thing, there are a number of proteins that frequently move between the nucleus and the cytosol, meaning that they may posses both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}. 
+From a biological perspective, there are also a number of reasons why it is conceivable that these particular protein classifiers (cytosolic and nuclear) should perform worse than the other two categories (secreted and mitochondrial). 
+For one thing, since a number of proteins frequently move between the nucleus and the cytosol, it is possible that many proteins may may posses both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals}. 
 This mixup of very distinct features (in the form of target peptides) would likely lead the classifiers to struggle to distinguish the correct class in ambiguous cases.
 
-Furthermore, it is likely that mitochondrial proteins and secreted proteins may have important properties that are unrelated to target peptides but still show up in our choice of features. For instance, since secreted proteins need to cross the cell membrane, it is possible features such as very large size or certain peptide make up, might make this action difficult. There may exist alternative restrictions on mitochondrial proteins, that need to be adapted to help in respiration, which might also restrict the protein's structure.
+Furthermore, it is likely that mitochondrial proteins and secreted proteins may have important macroscopic properties (aside from target peptides) that still show up in our choice of features.
+For instance There may exist restrictions on mitochondrial proteins, that need to be perhaps a certain size or make up, help in the respiration process.
 
-At any rate it is clear from the ROC curves in particular that secretion is particularly well detected, with \textit{comment about false positives etc}, nuclear and cytoplasmic classes are easier to confuse. An analysis of the exact features that could be responsible for this are presented in the next section.
+% At any rate it is clear from the ROC curves in particular that secretion is particularly well detected, with nuclear and cytoplasmic classes are easier to confuse. An analysis of the exact features that could be responsible for this are presented in the next section.
 
 
 % As mentioned previously, peptides destined for a certain subcellular location often have sequences of peptides encoding this. It is likely these are strong features in this sequence analysis, and will be examined in the netx Furthermore, it is likely that peptides operating in a certain part of the cell might have specific features, related to it specific function
@@ -321,34 +375,38 @@ At any rate it is clear from the ROC curves in particular that secretion is part
 % The strength of the secreted and mitochondrial classes i two classes as classifiers is at least partly down to the very specific nature of proteins these locations. For a protein to be secreted, there is a requirement that it is able to be transported across the cell membrane, and this puts some restrictions on the form the protein can take. \textbf{what restriction}. Similarly the mitochondrial proteins are highly likely to be used in respiration in some respect and so are likely again to have features that indicate this. 
 % However, there are many proteins that are frequently transported between the nucleus and the cytosol, meaning that it can be hard to distinguish these proteins from features.
 % A more specific look at the features, and what they can be used to discern, is examined in the following section.
-\begin{figure}[!h]
-\includegraphics[width=8cm]{cyto_import}
-\centering
-% \end{figure}\begin{figure}[h]
-\includegraphics[width=8cm]{mito_import}
-\centering
-% \end{figure}\begin{figure}[h]
+
+\begin{figure}[t]
 \includegraphics[width=8cm]{nucleus_import}
 \centering
 % \end{figure}\begin{figure}[h]
 \includegraphics[width=8cm]{secreted_import}
+\caption{Top 25 Feature Importances for Nucleus and Secreted classes in Random Forests Classifier}
+\label{fig:import2}
 \centering
 \end{figure}
+\subsection{Error Analysis}
 
 \subsection{Features Analysis}
 
 Perhaps more interesting than the comparison of the two different models is the close comparison of the features that have had a significant impact on the model.
-Thankfully, our One-Vs-Rest Random Forest Model has an in built way of examining the features, via the feature importances.
-These are displayed in figure \text{ref importances}.
+By inspecting Random Forest Model's feature importances, we have a natural way of interpreting the significance of each features to each classifier.
 
-The first thing to notice is the relative scales of the four graphs, in comparison to one another. The secreted classifier has a much stronger set of "significant" features, than all the other classes. In the case of comparison to nucleus and cytoplasmic classes, secreted's top feature is over twice the importance of the latter classes highest feature. Furthermore its top 4 features features all have higher importances than the highest single feature for these classes.  This indicates that there are distinct "killer features" for this class, and it appears they are highly tied to the fraction of Leucines and Cysteines at the start of the sequence, and the molecular weight and sequence length. \textbf{investigate data?}
+The first thing to notice is the relative scales of the four graphs, in comparison to one another. The secreted classifier (Fig \ref{fig:import2}) has a much stronger set of "significant" features, than all the other classes. 
+In the case of comparison to nucleus and cytoplasmic classes, secreted's top feature is over twice the importance of the latter classes' highest feature. 
+Furthermore its top 4 features features all have higher importances than the highest single feature for these classes.  
+This indicates that there are distinct `killer features' for this class, which explains why both AdaBoost and Random Forests scored particularly highly on this class.
+From the importances, it appears these features are highly tied to the fraction of Leucines and Cysteines at the start of the sequence, and the molecular weight and sequence length.
 
-Next to notice is that, as mentioned in the initial background, mitochondrial proteins also have importances supporting the target peptides alluded to. 
-\textit{Mitochondrial targeting signals} sometimes consist of alternating positively charged and hydrophobic amino acids forming a helix, so unsurprisingly our strongest features include features noting isoelectricity, structural helices, and the presence of positively charged Arginine at the start of the sequences.
+Next to notice is that, as mentioned in the initial background, mitochondrial proteins also have importances of features matching the description of the \textit{mitochondrial targeting signals}. 
+These target peptides sometimes consist of alternating positively charged and hydrophobic amino acids forming a helix, so correspondingly our strongest features include features noting isoelectricity, structural helices, and the presence of positively charged Arginine at the start of the sequences.
 
-When it comes to nuclear and cytosolic proteins, it's worth noting that the second and third best importance features are shared - indicating the difficulty these  classes might have in distinguishing themselves.  Furthermore these features - molecular weight and sequence length - are broad macroscopic features that do not really indicate a particular target sequence, and also show why it might be hard to classify these proteins. Even the "strongest feature" for these two classes is a macroscropic feature - isoelectric point, and percentage of "common helix" amino acids, indicating our set of features haven't been able to pick up the nuclear target peptides.
+When it comes to nuclear and cytosolic proteins, it's worth noting that the second and third best importance features - molecular weight and sequence length - are shared. 
+This indicates some of the difficulty these classes have in distinguishing themselves.  
+Furthermore these features are broad macroscopic features that do not really indicate a particular target sequence, also making it harder to classify these proteins. 
+In fact, even the "strongest feature" for each of these classes is a macroscropic feature - isoelectric point, and helix fraction - indicating our set of features haven't been able to pick up the nuclear target peptides.
 
-Finally it is worth noting that none of the most important features correspond to peptides at the end of the sequence.  This is fairly good evidence that something important happens at the N-terminus of a protein, and  supports background theory that this is where target peptides are often found.
+It is finally worth noting that none of the most important features correspond to peptides at the end of the sequence, only the start.  This is fairly good evidence that something important happens at the N-terminus of a protein, and supports background theory that this is where target peptides are often found.
 
 
 \subsection{Further Improvements}
@@ -357,216 +415,39 @@ Although this model performed well in distinguishing the secreted and mitochondr
 
 First, some measure of hydrophobicity would be a valuable additional feature. 
 As mentioned in section 2, often the hydrophobic characteristic of signal peptides is what is detected by receptors, but this model only captures these features indirectly, through looking at frequencies of individual amino acids.
-A specific feature for hydrophobicity wasn't added due to the lack of there being an available hydrophobicity scale in the BioPython module, but it is likely some measure of this  (both over the whole molucule and just the N terminus), would be of some value.
+A specific feature for hydrophobicity wasn't added due to the lack of there being an available hydrophobicity scale in the BioPython module, but it is likely some measure of this (both over the whole molucule and just the N terminus), would be of some value.
 
 Secondly, it might be worth exploring and searching for specific target patterns within the model. 
-In exploring potential features, I attempted to search for these by creating a feature for all possible "bigrams" and "trigrams" of residues, and examining importances after training, but the high dimensionality made learning difficult and slow. 
+When exploring potential features, I attempted to search for these by creating a feature for all possible "bigrams" and "trigrams" of residues, and examining importances after training, but the high dimensionality made learning difficult and slow. 
 Instead, if one had specific examples of known target peptides this feature would likely greatly help classification, without adding too much to computational complexity.
 A drawback would be that these examples may be very incomplete, as many signals are still unknown, so there may be a limited benefit.
 
 Finally it may be worth exploring the use of neural networks, as classifiers.
 Neural networks have shown significant promise in various fields in bioinformatics including protein function prediction \textbf{Jones et al}, and could theoretically be applied to this problem. 
-In this case, one could use a richer set of features and feed through a multiclass deep fully connected neural network, or even augment the sequence data with features and the feed augmented sequence into recurrent neural network, such as an LSTM. 
+In this case, one could use a richer set of features and feed through a multiclass deep neural network, or even augment the sequence data with features and the feed augmented sequence into recurrent neural network, such as an LSTM. 
 This latter architecture might have the advantage of allowing investigators to detect new target peptides, through spotting sequences that radically increase likelihoods of a certain classification.
 However, a draw back is that these neural methods often require a great deal of data, and the dataset here is relatively small so a neural model may not generalise well.
 This method should be considered, if more training sequence is avaliable.
 
 \section{Conclusions}
 
+In conclusion, it was clear that the Random Forests algorithm performed best when predicting the subcellular locations of proteins, achieving an F1 score of 0.683, and accuracy of 0.675. This beat the AdaBoost classifier, with F1 of 0.626 and accuracy of 0.643, although both models far surpassed a random benchmark based on a categorical distribution, with its F1 of 0.273 and accuracy 0.277. 
 
+The outperformance of the Random Forests algorithm, compared to AdaBoost, is likely due to the very noisy data that occurs in this field, and performance only really started to become comparable, when `killer features' were present for a class. However, both models seemed to struggle with same class classifications, which indicated an underlying difficulty with biological features, rather than the algorithms themselves.
 
-%     - Results of accuracy
-%     - Confusion matrix
-%     - ablation study
-%     - results compared to xgboost
+In particular, cytosolic and nuclear proteins were easily mixed up, likely due to the fact that both \textit{Nuclear Export Signals} and \textit{Nuclear Localization Signals} can be present on the same protein, and also are not restricted to only appearing at the N-terminus, making them harder to pick out. 
+Secreted and mitochondrial class classifiers performed much better, and had feature importances that supported the current biological understanding of signal peptides such as \textit{mitochondrial targeting signals}, and their structure. 
 
+Finally I concluded that the above experiment, while carried out well (with a hold out test accuracy performing very similarly to the cross-validation accuracy), could be improved by the addition of a number of extra features, including hydrophobicity or counting of known target peptide subsequences. Also in the case of being presented with more labelled data, I suggest neural methods could be used to tackle this problem with some success. 
 
-% Judging by the results of the confusion matrix and ROC Curves, it is clear the model greatly succeed in labelling some categories while struggling with others. In particular, it was able to classify secreted and mitochondrial proteins with much more success than nuclear and cytosolic proteins. \textit{X\%} of secreted proteins were classified correctly, along with \textit{X\%} of mitochondrial proteins. \textit{Precision and recall}. 
 
-% These locations are it is likely that these locations 
 
-%  This is likely both  down the similarity of the nuclear and cytosolic proteins, and the lack of an appropriate discriminating feature to distinguish their similarty.
 
 
-  
+\vspace*{-10pt}
 
 
-% \subsection{Classifier Analysis}
-
-% \subsection{Model Evaluation Analysis}
-
-
-
-
-\newpage
-yip
-\newpage
-
-Obtained data from X files, and mixed, shuffle and split into a train and validation split. Since the proteins are all non homologues, no need to arrange by family and could split anyway. 
-
-Then took these files and processed them into feature vectors, using the bipython module. These extracted, x features from the sequence. 
-
-Then trained a random forest classifier with X trees, and also tested a XGBboost classifier.
-
-Cross validated grid search done to find best parameters for trees
-Ablation study used to investigate salient features.
-
-Trained a random forest with X trees. 
-
-What did you do?
-    - extract features
-    - train -test split - homologies
-    - cross validate
-    - compared with a model (gradient boosting?)
-    - ablation study
-
-
-
-    - Results of accuracy
-    - Confusion matrix
-    - ablation study
-    - results compared to xgboost
-\section{Discussion}
-   - Examine the features
-   - Examine the ablation study
-   - Examine comparison to XGBoost
-   - Compare with existing literature and approaches
-
-
-
-\section{Further Work}
-    - suggestions: more data? better features/
-
-\section{Conclusion}
-
-\section{Theoretical Background}
-
-What about ???
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\newpage
-end of paper
-\newpage
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01}
-shows that the above method  Text Text Text Text  Text Text Text
-Text Text Text  Text Text.  \citep{Bag01} wants to know about
-{\ldots}{\ldots} text follows.
-\begin{equation}
-\sum \text{\it x}+ \text{\it y} =\text{\it Z}\label{eq:01}\vspace*{-10pt}
-\end{equation}
-
-%\enlargethispage{12pt}
-
-\section{Approach}
-
-Equation~(\ref{eq:01}) Text Text Text Text Text Text  Text Text
-TextText.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text  Text Text Text Text Text Text  Text Text.
-.....
-
-
-\begin{methods}
-\section{Methods}
-  .
-Figure~2\vphantom{\ref{fig:02}} shows that the above method   .
-text\vspace*{1pt}
-
-\begin{itemize}
-\item for bulleted list, use itemize
-\item for bulleted list, use itemize
-\item for bulleted list, use itemize\vspace*{1pt}
-\end{itemize}
-  .
-Figure~2\vphantom{\ref{fig:02}} shows that the above method   .
-
-
-\enlargethispage{6pt}
-Text Text  Text Text.
-
-\begin{table}[!t]
-\processtable{This is table caption\label{Tab:01}} {\begin{tabular}{@{}llll@{}}\toprule head1 &
-head2 & head3 & head4\\\midrule
-row1 & row1 & row1 & row1\\
-row2 & row2 & row2 & row2\\
-row3 & row3 & row3 & row3\\
-row4 & row4 & row4 & row4\\\botrule
-\end{tabular}}{This is a footnote}
-\end{table}
-
-\end{methods}
-
-\begin{figure}[!tpb]%figure1
-\fboxsep=0pt\colorbox{gray}{\begin{minipage}[t]{235pt} \vbox to 100pt{\vfill\hbox to
-235pt{\hfill\fontsize{24pt}{24pt}\selectfont FPO\hfill}\vfill}
-\end{minipage}}
-%\centerline{\includegraphics{fig01.eps}}
-\caption{Caption, caption.}\label{fig:01}
-\end{figure}
-
-%\begin{figure}[!tpb]%figure2
-%%\centerline{\includegraphics{fig02.eps}}
-%\caption{Caption, caption.}\label{fig:02}
-%\end{figure}
-
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     please remove the " % " symbol from \centerline{\includegraphics{fig01.eps}}
-%     as it may ignore the figures.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-\begin{enumerate}
-\item this is item, use enumerate
-\item this is item, use enumerate
-\item this is item, use enumerate
-\end{enumerate}
-
-
-Text Text Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows\vadjust{\pagebreak} that the
- Text Text Text Text Text Text  Text Text Text Text
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text Text Text Text Text Text Text  Text Text.
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text Text Text Text Text Text\break Text.
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text
-Text Text  Text Text Text Text Text Text.
-Figure~2\vphantom{\ref{fig:02}} shows that the above method  Text
-Text Text Text\vspace*{-10pt}
-
-
-\section*{Acknowledgements}
+% \section*{Acknowledgements}
 
 
 %\bibliographystyle{natbib}
