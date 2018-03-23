@@ -24,7 +24,7 @@
 Predicting subcellular localization from raw sequence data is a important research problem, with applications in drug discovery and medecine research. 
 This paper presents a comparison of two machine learning classifiers to do this: Random Forests and AdaBoost.
 Using features derived from the sequence, these were trained to classify non homologuous protein sequences into four localizations: cytosolic, nuclear, secretory, mitochondrial.
-These models were compared to each other and a baseline, and the best was chosen to predict localizations for X unknown proteins. \\
+These models were compared to each other and a baseline, and the best was chosen to predict localizations for 20 unknown proteins. \\
 \textbf{Results:} The Random Forest classifier performed best in the comparison, with a test accuracy of 67.5\%, and F1 score of 68.3\% . This outperformed AdaBoost's 64.4\%  test accuracy and F1 of 62.6\%. Both beat the benchmark significantly, and the Random Forest model was chosen to make the final predictions.\\
 % \textbf{Availability:} Text  Text Text Text Text
 \textbf{Contact:} \href{eric.hambro.17@ucl.ac.uk}{eric.hambro.17@ucl.ac.uk}
@@ -35,21 +35,17 @@ These models were compared to each other and a baseline, and the best was chosen
 
 %% TODO 
 % * Introduction & fill in with experiments
-% * Prediction of Proteins
-% * Normalise CM
 % * Error Bars on RocAuc
-% * Refeences to pictures
-% * Bagging Boosting Compare models
-% * Conclusion
-% * Abstract
+
 \section{Introduction}
 
 Discovering subcellular localization of proteins is a vital piece of information in many applied fields in cell biology. 
-Not only is it important to help discover and catalogue the complex chemical pathways and signals that occur inside the cell, but it has vital medical applications, in particular in drug discovery and delivery. Furthermore, in cases where no homology is evident for a gene, subcellular localization of the protein can be used an indicator of the potential function of that protein - a vital clue in the right direction.
+Not only is it important to help discover and catalogue the complex chemical pathways and signals that occur inside the cell, but it has vital medical applications, in particular in drug discovery and vaccination study. Furthermore, in cases where no homology is evident for a gene, subcellular localization of the protein can be used an indicator of the potential function of that protein.
 
-Since as early as \textbf{blah}, machine learning has been used to help predict automatically the subcellular localization of a protein, in an attempt to reduce the cost and time taken to process a protein sequences.  
-Traditional methods of determining subcellular location, such as tagging proteins with immunofluorescence, were laborious and time intensive, and have been unable to keep up with the rapidly proliferating amount of genetic and protein sequence data. 
-Using automated machine learning techniques, bioinformaticians have been able to make predictions at a high degree of confidence with only sequence data. One of the first of these models was \textit{cite and a sentence how it worked}, although today common methods include \textit{methods, cite 1}  and \textit{methods, cite 2}.
+Beginning in the late 90s, machine learning started to be used in subcellular localization prediction in an attempt to reduce the cost and time taken to process protein sequences.  
+Traditional methods of determining subcellular location, such as tagging proteins with with fluorescent dyes, were laborious and time intensive, and had been unable to keep up with the rapidly proliferating amount of genetic and protein sequence data. 
+
+The first of these such machine learning models was PSORT \cite{Nakai}, who used handcrafted sequence features and the taxon of origin to predict localization, using a k-nearest neighbours model.  Since then a number of improvements have made to the field, through use of a variety of different machine learning models, and specialising in different organism's cells. For instance, recent models such as REALoc (\cite{Tung}) combine SVMS and Generative Adversarial Neural Networks in layers, to predict 6 subcellular localizations in human proteins, achieving a test accuracy on an independent database, surpassing 6 other models by over 10\%.
 
 % Although sequence data of genes has proliferated since the advent of \textbf{technique}, the classification of protein function has lagged behind significantly.  \textbf{Statistic}. 
 % This is partly down to the fact that protein function is a complex labelling task, given the function of proteins may vary under different conditions.  
@@ -58,8 +54,8 @@ Using automated machine learning techniques, bioinformaticians have been able to
 % As such, automated means of predicting subcelular localization are utmost urgency in todays drug search enbironment.
 
 
-In this particular experiment we are presented with a labeled data set of 9222 proteins and we will try to predict and evaluate both a Random Forests model and AdaBoost model on these data, comparing both to a baseline random model.
-The proteins themselves each correspond to one of four subcellular localizations - cytosolic, secretory, nuclear or mitochondrial - and after training the models, we make predictions of locations for \textit{X} unknown proteins in these classes, before analysing our own test errors and models. 
+In this particular experiment we are presented with a labeled data set of 9222 proteins and we predict and evaluate both a Random Forests model and AdaBoost model on these data, comparing both to a baseline random model.
+The proteins themselves each correspond to one of four subcellular localizations - cytosolic, secretory, nuclear or mitochondrial - and after training the models, we make predictions of locations for 20 unknown proteins in these classes, before analysing our own test errors and models. 
 
 Section 2 of this paper contains a brief background of biological and machine learning elements used in the experiment, whereas Sections 3 and 4 presents the methods and results of the experiments. In Section 5 a discussion of the results is presented, along with a comparison of the models, their features, and analysis of the errors. A short conclusion is presented in Section 6.
 
@@ -80,25 +76,26 @@ Section 2 of this paper contains a brief background of biological and machine le
 
 In eukaryotic cells, proteins are often highly adapted to fulfilling their specialist functions in the cell.
 These functions can be very localized within organelles or other parts of the cell, and so the proteins are too adapted to the specific subcellular location in the cell. 
-In order to faciliate transport of protein to its location, often a location signifier is in some way encoded into the structure of the protein.
-This what's known as a target peptide (if heading to an organelle) or signal peptide (if secreted). 
-These peptides can vary greatly in structure, depending on the final destination, and can be explored in greater depth in \cite{Alb00}. 
-Sometimes they are removed by a signal peptidase, when they reach their destinations.
+In order to faciliate transport of protein to its location, often a location signifier is in some way encoded into the structure and sequence of the protein.
+These what's known as target peptides or signal peptides. 
+These peptides are sometimes removed by a signal peptidase when they reach their destinations, and so have little other functional significance. 
+They can vary greatly in structure, depending on their final destination, and can be explored in greater depth in Chapter 12 of \cite{Alb00}. 
 Below are some of the known features of signal and target peptides, as mentioned in the above book.
 
 \begin{enumerate}
   \item {\textbf{Targeting Secretion}} 
 %https://www.ncbi.nlm.nih.gov/books/NBK6322/
 
-  Proteins headed toward secretory pathways often contain short amino acid encodings (say 16-30 amino acids long), occuring near the N-terminus of the protein. Often they include a domain or sequence that is particularly hydrophobic, and these hydrophobic residues may form an $\alpha$-helix. 
+  Proteins headed toward secretory pathways often contain short amino acid encodings (approximately 16-30 amino acids long), occuring near the N-terminus of the protein. Often they include a domain or sequence that is particularly hydrophobic, and these hydrophobic residues may form an $\alpha$-helix. 
 
   \item {\textbf{Targeting Mitochondria}} 
 
-  In the case of proteins headed to mitochondria, a \textit{mitochondrial targeting signal} of a peptide signal is often found at the N terminus of the protein. These often consist of alternating positively charged and hydrophobic amino acids, that come together to form an amphiphilic $\alpha$-helix. These this pattern (of positively charged residues on one side, and uncharged hydrophobic residues on another) is what is primarily recognised by the receptor proteins, rather than a specific sequence.
+  In the case of proteins headed to mitochondria, a \textit{mitochondrial targeting signal} of a peptide signal is often found at the N-terminus of the protein. These often consist of alternating positively charged and hydrophobic amino acids, that come together to form an amphiphilic $\alpha$-helix. This pattern (of positively charged residues on one side, and uncharged hydrophobic residues on another) is what is primarily recognised by the receptor proteins, rather than a specific sequence.
 
   \item {\textbf{Into The Nucleus}} 
 
-  Proteins that require importing into the nucleus often contain a \textit{Nuclear Localization Signal}, which may consist of a sequence amino acids that are positively charged (often arginine and lysine) exposed on the surface of the protein. In contrast with the other target peptides, it appears these signals can occure almost anywhere in the chain, and often form loops. Many of these are still uncharacterised.  
+  Proteins that require importing into the nucleus often contain a \textit{Nuclear Localization Signal}, which may consist of a sequence amino acids that are positively charged (often arginine and lysine) exposed on the surface of the protein. 
+  In contrast with the other target peptides, it appears these signals can occure almost anywhere in the chain, and often form loops. Many of these are still uncharacterised.  
 
    \item {\textbf{Out of the Nucleus (Into The Cytosol)}} 
 
@@ -285,7 +282,7 @@ Furthermore in all cases, the test set accuracies were very close to the mean cr
 
 \subsection{Predictions}
 
-Since the Random Forest Model was selected as our best model, it was subsequently used to to make predictions of \textbf{YYY} hitherto unclassified proteins. These prediction, along with percentage confidence scores, are given in Table \ref{Tab:predict}.
+Since the Random Forest Model was selected as our best model, it was subsequently used to to make predictions of 20 hitherto unclassified proteins. These prediction, along with percentage confidence scores, are given in Table \ref{Tab:predict}.
 
 \begin{table}[!h]
 \processtable{Predictions of Test Proteins\label{Tab:predict}} {\begin{tabular}{@{}lll|lll@{}}\toprule Protein ID  &  Location & Probabilty & Protein ID  &  Location & Probabilty\\\midrule
@@ -468,13 +465,11 @@ Alberts, \textit{et~al}. (2008) Molecular Biology of the Cell
 (5th ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
 ???--???.
 
+\bibitem[Nakai {\it et~al}., 1999]{Nakai}
+Nakai, K. and Horton, P., PSORT: a program for detecting the sorting signals of proteins and predicting their subcellular localization, \textit{Trends Biochem. Sci}, 24(1) 34-35 (1999).
 
-
-\bibitem[Bofelli {\it et~al}., 2000]{Boffelli03}
-Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
-
-\bibitem[Bag {\it et~al}., 2001]{Bag01}
-Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
+\bibitem[Tung {\it et~al}., 2017]{Tung}
+Tung C-H, Chen C-W, Sun H-H, Chu Y-W (2017) Predicting human protein subcellular localization by heterogeneous and comprehensive approaches. PLoS ONE 12(6): e0178832. https://doi.org/10.1371/journal.pone.0178832
 
 \bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
 Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
